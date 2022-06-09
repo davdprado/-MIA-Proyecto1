@@ -8,10 +8,11 @@ using namespace std;
 void comandos(string comand_line)
 {
     char *dupli = strdup(comand_line.c_str());
-    char *token = strtok(dupli, " $@");
-    cout << token << endl;
+    char *token = strtok(dupli, " ");
+    // cout << token << endl;
     if (strcasecmp(token, "mkdisk") == 0)
     {
+        token = strtok(NULL, "");
         CrearDisk(token);
     }
     else
