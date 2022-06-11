@@ -27,6 +27,17 @@ vector<string> split(string str, string token)
             str = "";
         }
     }
+    for (int i = 0; i < result.size(); i++)
+    {
+        if (result[i] == "")
+        {
+            result.erase(result.begin() + i);
+        }
+        if (result[i].back() == ' ')
+        {
+            result[i].pop_back();
+        }
+    }
     return result;
 }
 
@@ -67,15 +78,12 @@ void CrearDisk(char *tokens)
 {
     vector<string> params = split(tokens, "$");
     // limpiando parametros
-    for (int i = 0; i < params.size(); i++)
+    for (auto &&parametro : params)
     {
-        if (params[i] == "")
-        {
-            params.erase(params.begin() + i);
-        }
-        if (params[i].back() == ' ')
-        {
-            params[i].pop_back();
-        }
+        char *str_aux = strdup(parametro.c_str());
+        char *newtoken = strtok(str_aux, "=>");
+        cout << "Parametro: " << newtoken;
+        newtoken = strtok(NULL, ">");
+        cout << " Valor: " << newtoken << endl;
     }
 }
