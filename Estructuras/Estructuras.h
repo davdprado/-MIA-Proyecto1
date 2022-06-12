@@ -28,3 +28,24 @@ struct MBR
     int mbr_disk_asignature;
     Particion mbr_partition[4];
 };
+
+struct EBR
+{
+    char part_fit;
+    int part_start;
+    int part_size;
+    int part_next;
+    char part_name[16];
+};
+
+struct Espacio
+{
+    int espaciolibre;
+    int bytestart;
+};
+
+struct partmount
+{
+    char id[16];
+    char nombre[16];
+};
