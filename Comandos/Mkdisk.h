@@ -41,68 +41,6 @@ vector<string> split(string str, string token)
     return result;
 }
 
-vector<string> Getparams(string str, string pattern)
-{
-    int posInit = 0;
-    int posFound = 0;
-    string splitted;
-    vector<string> results;
-
-    while (posFound >= 0)
-    {
-        posFound = str.find(pattern, posInit);
-        splitted = str.substr(posInit, posFound - posInit);
-        posInit = posFound + 1;
-        results.push_back(splitted);
-    }
-
-    return results;
-}
-
-void limpiarV(vector<string> params)
-{
-    for (int i = 0; i < params.size(); i++)
-    {
-        if (params[i] == "")
-        {
-            params.erase(params.begin() + i);
-        }
-        if (params[i].back() == ' ')
-        {
-            params[i].pop_back();
-        }
-    }
-}
-
-string FirstAndLast(string str)
-{
-    // add a space to the end of the string
-    str += " ";
-
-    string res = "", w = "";
-
-    // traverse the string and extract words
-    for (int i = 0; i < str.length(); i++)
-    {
-        if (str[i] == ' ')
-        {
-            // excluding the first and
-            // last character
-            res += w.substr(1, w.length() - 2) + " ";
-
-            // clear the word
-            w = "";
-        }
-        else
-        {
-            // else add the character to word
-            w += str[i];
-        }
-    }
-
-    return res;
-}
-
 void CrearDisk(char *tokens)
 {
     string path, name;
@@ -130,7 +68,7 @@ void CrearDisk(char *tokens)
             // tomar el dato de size
             newtoken = strtok(NULL, ">");
             int tam_aux = atoi(newtoken);
-            if (tam % 8 != 0)
+            if (tam_aux % 8 != 0)
             {
                 cout << "El size del disco no es multiplo de 8" << endl;
                 return;
@@ -196,4 +134,5 @@ void CrearDisk(char *tokens)
     fseek(file, 0, SEEK_SET);
     fwrite(&mbr, sizeof(MBR), 1, file);
     fclose(file);
+    // faltaria la simulacion del raid
 }

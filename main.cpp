@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <fstream>
 #include "Comandos/Mkdisk.h"
+#include "Comandos/Rmdisk.h"
+#include "Comandos/Fdisk.h"
 using namespace std;
 
 void comandos(string comand_line)
@@ -14,6 +16,16 @@ void comandos(string comand_line)
     {
         token = strtok(NULL, "");
         CrearDisk(token);
+    }
+    else if (strcasecmp(token, "rmdisk") == 0)
+    {
+        token = strtok(NULL, "");
+        EliminarDisk(token);
+    }
+    else if (strcasecmp(token, "fdisk") == 0)
+    {
+        token = strtok(NULL, "");
+        efeDisk(token);
     }
     else
     {
