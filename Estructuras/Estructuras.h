@@ -26,8 +26,5 @@ struct MBR
     int mbr_tam;
     time_t mbr_fecha;
     int mbr_disk_asignature;
-    Particion mbr_partition_1;
-    Particion mbr_partition_2;
-    Particion mbr_partition_3;
-    Particion mbr_partition_4;
+    Particion mbr_partition[4];
 };
