@@ -12,6 +12,11 @@ void comandos(string comand_line)
     char *dupli = strdup(comand_line.c_str());
     char *token = strtok(dupli, " ");
     // cout << token << endl;
+    if (token[0] == '/' && token[1] == '*')
+    {
+        return;
+    }
+
     if (strcasecmp(token, "mkdisk") == 0)
     {
         token = strtok(NULL, "");
@@ -43,7 +48,10 @@ void consola()
     {
         return;
     }
-    comandos(entrada);
+    if (!entrada.empty())
+    {
+        comandos(entrada);
+    }
     consola();
 }
 

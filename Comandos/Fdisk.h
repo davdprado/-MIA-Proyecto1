@@ -533,7 +533,7 @@ void EliminarParticion(string path, string name, string delette)
                     fclose(file);
                     if (tipoDelete == "Full")
                     {
-                        formateofull(path, logica.part_start, (sizeof(EBR) + logica.part_size));
+                        // formateofull(path, logica.part_start, (sizeof(EBR) + logica.part_size));
                     }
                     for (auto &&logica : listaebr)
                     {
@@ -554,7 +554,7 @@ void EliminarParticion(string path, string name, string delette)
         {
             strcpy(particion.part_name, "");
             particion.part_size = 0;
-            particion.part_start = nuevombr.mbr_tamanio;
+            particion.part_start = nuevombr.mbr_tam;
             particion.part_status = 0;
             particion.part_fit = 'W';
             particion.part_type = 'P';
@@ -564,7 +564,7 @@ void EliminarParticion(string path, string name, string delette)
             ModificarDiscof(nuevombr, path);
             if (tipoDelete == "Full")
             {
-                formateofull(path, particion.part_start, particion.part_size);
+                // formateofull(path, particion.part_start, particion.part_size);
             }
         }
     }
