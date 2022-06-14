@@ -7,8 +7,19 @@
 #include "Comandos/Fdisk.h"
 using namespace std;
 
+bool fileExists(std::string const &name)
+{
+    ifstream f(name.c_str());
+    return f.good();
+}
+
 void comandos(string comand_line)
 {
+    if (comand_line.empty())
+    {
+        return;
+    }
+
     char *dupli = strdup(comand_line.c_str());
     char *token = strtok(dupli, " ");
     // cout << token << endl;
@@ -31,6 +42,53 @@ void comandos(string comand_line)
     {
         token = strtok(NULL, "");
         efeDisk(token);
+    }
+    else if (strcasecmp(token, "exec") == 0)
+    {
+        string path = "";
+        token = strtok(NULL, "");
+        vector<string> params = split(token, "$");
+        for (auto &&parametro : params)
+        {
+            char *str_aux = strdup(parametro.c_str());
+            char *newtoken = strtok(str_aux, "=>");
+            if (strcasecmp(newtoken, "path") == 0)
+            {
+                // tomar el dato de path
+                newtoken = strtok(NULL, ">");
+                // obtener el path
+                path = newtoken;
+                if (path[0] == '"')
+                {
+                    path.erase(path.begin());
+                    path.erase(path.size() - 1);
+                }
+            }
+        }
+        if (fileExists(path))
+        {
+
+            ifstream archivoA(path.c_str());
+            string linea;
+            while (getline(archivoA, linea))
+            {
+                if (!linea.empty())
+                {
+                    cout << "comand:~ " << linea << endl;
+                    linea = deleteCaracter(linea, '\r');
+                    linea = deleteCaracter(linea, '\t');
+                    linea = deleteCaracter(linea, '\n');
+                    comandos(linea);
+                }
+            }
+        }
+    }
+    else if (strcasecmp(token, "pause") == 0)
+    {
+        token = strtok(NULL, "");
+        string statep = "";
+        cout << "Estamos en pausa por favor presiona cualquier tecla antes de continuar:";
+        getline(cin, statep);
     }
     else
     {

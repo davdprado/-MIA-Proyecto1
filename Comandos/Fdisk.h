@@ -265,7 +265,14 @@ void crearParticion(string path, string unit, int size, string name, string type
     char fit, tipo;
     int start = 0, taman = 0;
     char nombre[16];
-    strcpy(nombre, name.c_str());
+    if (strstr(name.c_str(), "\"") != NULL)
+    {
+        strcpy(nombre, deleteCaracter(name, '"').c_str());
+    }
+    else
+    {
+        strcpy(nombre, name.c_str());
+    }
 
     if (strcasecmp(type.c_str(), "p") == 0)
     {
@@ -285,21 +292,21 @@ void crearParticion(string path, string unit, int size, string name, string type
         return;
     }
 
-    if (strcasecmp(type.c_str(), "bf") == 0)
+    if (strcasecmp(ajuste.c_str(), "bf") == 0)
     {
         fit = 'B';
     }
-    else if (strcasecmp(type.c_str(), "wf") == 0)
+    else if (strcasecmp(ajuste.c_str(), "wf") == 0)
     {
         fit = 'W';
     }
-    else if (strcasecmp(type.c_str(), "ff") == 0)
+    else if (strcasecmp(ajuste.c_str(), "ff") == 0)
     {
         fit = 'F';
     }
     else
     {
-        cout << "Error Atributo no valido para fit " + tipo << endl;
+        cout << "Error Atributo no valido para fit " << tipo << endl;
         return;
     }
     taman = CalcularBytes(size, unit);
@@ -335,6 +342,112 @@ void crearParticion(string path, string unit, int size, string name, string type
             return;
         }
         // aqui va todo lo de las logicas
+        EBR listaebr[14];
+        string s = path;
+        char sc[s.size() + 1];
+        strcpy(sc, s.c_str());
+        FILE *file = fopen(sc, "rb+");
+        fseek(file, particionExtendida.part_start, SEEK_SET);
+        fread(&listaebr, sizeof(EBR), 14, file);
+        fclose(file);
+        // aqui se hace la verificacion de que no exista el nombre
+        //
+        int tamrealpartlogica = sizeof(EBR) + taman;
+        if (tamrealpartlogica > particionExtendida.part_size)
+        {
+            cout << "No se pudo crear la particion por falta de espacio" << endl;
+        }
+        for (auto &&logica : listaebr)
+        {
+            string newname = nombre;
+            string namelog = logica.part_name;
+            if (newname == namelog)
+            {
+                cout << "La particion ya existe particion con ese nombre " + newname << endl;
+                return;
+            }
+        }
+        OrdenarArreglo(listaebr);
+        int byteinicioL = 0;
+        for (int i = 0; i < 14; i++)
+        {
+            if (i == 0)
+            {
+                int espaciolibre = (listaebr[i].part_start - 1) - particionExtendida.part_start;
+                if (tamrealpartlogica <= espaciolibre)
+                {
+                    byteinicioL = particionExtendida.part_start;
+                    break;
+                }
+            }
+            else if (i == 13)
+            {
+                // int endBefore = listaebr[i - 1].part_start + (sizeof(EBR) + listaebr[i - 1].part_size);
+                int endpartition = ObtenerByteFinal(listaebr[i - 1].part_start, (sizeof(EBR) + listaebr[i - 1].part_size));
+                int espaciolibre = ((particionExtendida.part_start + particionExtendida.part_size) - 1) - endpartition;
+                if (tamrealpartlogica <= espaciolibre)
+                {
+                    byteinicioL = endpartition + 1;
+                    break;
+                }
+                else
+                {
+                    cout << "Ya no queda espacio para la particio" << endl;
+                    return;
+                }
+            }
+            else
+            {
+                int endpartition = ObtenerByteFinal(listaebr[i - 1].part_start, (sizeof(EBR) + listaebr[i - 1].part_size));
+                // int endBefore = listaebr[i - 1].part_start + (sizeof(EBR) + listaebr[i - 1].part_size);
+                int espaciolibre = (listaebr[i].part_start - 1) - endpartition;
+                if (tamrealpartlogica <= espaciolibre)
+                {
+                    byteinicioL = endpartition + 1;
+                    break;
+                }
+            }
+        }
+        // encuentro la primera vacia
+        for (int i = 0; i < 14; i++)
+        {
+            if (listaebr[i].part_size == 0)
+            {
+                listaebr[i].part_fit = particionExtendida.part_fit;
+                listaebr[i].part_size = taman;
+                strcpy(listaebr[i].part_name, nombre);
+                listaebr[i].part_start = byteinicioL;
+                break;
+            }
+        }
+        OrdenarArreglo(listaebr);
+        setPunteros(listaebr);
+        for (auto &&logica : listaebr)
+        {
+            if (logica.part_size != 0)
+            {
+                int terminoEBR = 0;
+                terminoEBR = logica.part_start + sizeof(EBR);
+                cout << logica.part_name << ": " << endl;
+                cout << "EBR: " << logica.part_start << " - " << terminoEBR << endl;
+                cout << "Logica: " << terminoEBR + 1 << " - " << terminoEBR + 1 + logica.part_size << " -->" << logica.part_next << endl;
+            }
+        }
+        FILE *arch = NULL;
+        // r= read = si el disco ya existia
+        arch = fopen(sc, "r");
+        if (arch == NULL)
+        {
+            cout << "ERROR: no existe el disco" << endl;
+            return; // error
+        }
+        arch = fopen(sc, "rb+");
+        fseek(arch, particionExtendida.part_start, SEEK_SET);
+        fwrite(&listaebr, sizeof(EBR), 14, arch);
+        fclose(arch);
+        cout << "Se creo la particion" << endl;
+        cout << "-------------------------------------------------" << endl;
+        // xd
     }
     else
     {
@@ -504,7 +617,7 @@ void EliminarParticion(string path, string name, string delette)
         string npath = particion.part_name;
         if (particion.part_type == 'E')
         {
-            EBR listaebr[50];
+            EBR listaebr[14];
             string s = path;
             char sc[s.size() + 1];
             strcpy(sc, s.c_str());
@@ -529,7 +642,7 @@ void EliminarParticion(string path, string name, string delette)
                     setPunteros(listaebr);
                     FILE *file = fopen(sc, "rb+");
                     fseek(file, particion.part_start, SEEK_SET);
-                    fwrite(&listaebr, sizeof(EBR), 50, file);
+                    fwrite(&listaebr, sizeof(EBR), 14, file);
                     fclose(file);
                     if (tipoDelete == "Full")
                     {
@@ -592,38 +705,34 @@ void efeDisk(char *tokens)
     bool banderaDelete = false;
     bool banderaCustom = false;
     vector<string> params = split(tokens, "$");
+    vector<string> newparams;
     // separar los obligatorios de los opcionales y unirlos
     // como quien dice juntos pero no revueltos
-    int i = 0;
-    for (auto &&ite : params)
+    for (auto &&parametro : params)
     {
-        bool bandera = false;
-        vector<string> newparam = split(ite, "@");
-        if (newparam.size() > 0)
+        if (strstr(parametro.c_str(), "@") != NULL)
         {
-            for (auto &&opcionales : newparam)
+            vector<string> newparam = split(parametro, "@");
+            if (newparam.size() > 0)
             {
+                for (auto &&opcionales : newparam)
+                {
 
-                if (bandera)
-                {
-                    params.push_back(opcionales);
-                }
-                else
-                {
-                    params.push_back(opcionales);
-                    params.erase(params.begin() + i);
-                    bandera = true;
+                    newparams.push_back(opcionales);
                 }
             }
         }
-        i++;
+        else
+        {
+            newparams.push_back(parametro);
+        }
     }
-    for (auto &&i : params)
+    for (auto &&i : newparams)
     {
         cout << i << endl;
     }
 
-    for (auto &&parametro : params)
+    for (auto &&parametro : newparams)
     {
         char *str_aux = strdup(parametro.c_str());
         char *newtoken = strtok(str_aux, "=>");

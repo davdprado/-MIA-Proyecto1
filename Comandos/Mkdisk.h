@@ -7,7 +7,17 @@
 #include "../Estructuras/Estructuras.h"
 
 using namespace std;
-
+string deleteCaracter(string str, char caracter)
+{
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == caracter)
+        {
+            str.erase(str.begin() + i);
+        }
+    }
+    return str;
+}
 vector<string> split(string str, string token)
 {
     vector<string> result;
@@ -80,6 +90,12 @@ void CrearDisk(char *tokens)
             // tomar el dato de size
             newtoken = strtok(NULL, ">");
             name = newtoken;
+            // quitar las comillas al name
+            if (name[0] == '\"')
+            {
+                name.erase(name.begin());
+                name.erase(name.size() - 1);
+            }
         }
         else
         {
