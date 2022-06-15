@@ -19,6 +19,12 @@
 #include "../Estructuras/Estructuras.h"
 using namespace std;
 
+bool fileExists(std::string const &name)
+{
+    ifstream f(name.c_str());
+    return f.good();
+}
+
 void ModificarDiscof(MBR nuevombr, string path)
 {
     cout << "Particiones del disco: " << endl;
@@ -260,7 +266,7 @@ int CalcularBytes(int tamanio, string dimension)
     return tam;
 }
 
-void crearParticion(string path, string unit, int size, string name, string type, string ajuste)
+void crearParticion(string path, string unit, int size, string name, string type, string ajuste, bool raid)
 {
     char fit, tipo;
     int start = 0, taman = 0;
@@ -586,6 +592,19 @@ void crearParticion(string path, string unit, int size, string name, string type
         }
         // xd
     }
+    if (!raid)
+    {
+        // tengo que trabajar sobre el raid
+        string pathraid;
+        vector<string> auxraid = split(path, ".");
+        pathraid = auxraid[0] + "_raid.dsk";
+        string comandoraid = "cp -a \"" + path + "\" \"" + pathraid + "\"";
+        int status2 = system(comandoraid.c_str());
+        if (status2 == 0)
+            cout << "Raid Creado" << endl;
+        else
+            cout << "ocurrio un error" << endl;
+    }
 }
 
 void EliminarParticion(string path, string name, string delette)
@@ -820,7 +839,20 @@ void efeDisk(char *tokens)
     if (banderaCreate)
     {
         // aqui va el crear una particion
-        crearParticion(path, u, tam, name, type, fit);
+        if (!fileExists(deleteCaracter(path, '\"')))
+        {
+            // si no existe se tiene que trabajar en el raid
+            string path_raid = deleteCaracter(path, '\"');
+            vector<string> aux = split(path_raid, ".");
+            path_raid = "\"" + aux[0] + "_raid.dsk\"";
+            crearParticion(path_raid, u, tam, name, type, fit, true);
+
+            // hola uwu
+        }
+        else
+        {
+            crearParticion(path, u, tam, name, type, fit, false);
+        }
     }
     else if (banderaCustom)
     {

@@ -7,12 +7,6 @@
 #include "Comandos/Fdisk.h"
 using namespace std;
 
-bool fileExists(std::string const &name)
-{
-    ifstream f(name.c_str());
-    return f.good();
-}
-
 void comandos(string comand_line)
 {
     if (comand_line.empty())
