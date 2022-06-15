@@ -151,4 +151,14 @@ void CrearDisk(char *tokens)
     fwrite(&mbr, sizeof(MBR), 1, file);
     fclose(file);
     // faltaria la simulacion del raid
+    // crear el raid
+    string pathraid;
+    vector<string> auxraid = split(s, ".");
+    pathraid = auxraid[0] + "_raid.dsk";
+    string comandoraid = "cp -a \"" + s + "\" \"" + pathraid + "\"";
+    int status2 = system(comandoraid.c_str());
+    if (status2 == 0)
+        cout << "Raid Creado" << endl;
+    else
+        cout << "ocurrio un error" << endl;
 }
