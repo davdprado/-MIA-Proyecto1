@@ -5,6 +5,7 @@
 #include "Comandos/Mkdisk.h"
 #include "Comandos/Rmdisk.h"
 #include "Comandos/Fdisk.h"
+#include "Comandos/Mount.h"
 using namespace std;
 
 void comandos(string comand_line)
@@ -36,6 +37,11 @@ void comandos(string comand_line)
     {
         token = strtok(NULL, "");
         efeDisk(token);
+    }
+    else if (strcasecmp(token, "mount") == 0)
+    {
+        token = strtok(NULL, "");
+        montar(token);
     }
     else if (strcasecmp(token, "exec") == 0)
     {

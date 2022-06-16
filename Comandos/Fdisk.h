@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <iomanip>
 #include <list>
-
+#include <fstream>
 #include <filesystem>
 #include <dirent.h>
 #include <sys/types.h>
@@ -18,6 +18,28 @@
 #include "Mkdisk.h"
 #include "../Estructuras/Estructuras.h"
 using namespace std;
+
+void formateofull(string path, int byteinicio, int bytefinal)
+{
+    char buff = '\0';
+    string s = path;
+    char sc[s.size() + 1];
+    strcpy(sc, s.c_str());
+    FILE *file = NULL;
+    // r= read = si el disco ya existia
+    file = fopen(sc, "r");
+    if (file == NULL)
+    {
+        cout << "ERROR: no existe el disco" << endl;
+        return; // error
+    }
+    file = fopen(sc, "rb+");
+    fseek(file, byteinicio, SEEK_SET);
+    fwrite(&buff, sizeof(buff), bytefinal, file);
+    fseek(file, byteinicio + bytefinal, SEEK_SET);
+    fwrite(&buff, sizeof(buff), 1, file);
+    fclose(file);
+}
 
 bool fileExists(std::string const &name)
 {
@@ -607,11 +629,13 @@ void crearParticion(string path, string unit, int size, string name, string type
     }
 }
 
-void EliminarParticion(string path, string name, string delette)
+void EliminarParticion(string ruta, string name, string delette, bool raid)
 {
     bool existepart = false;
     bool eslogica = false;
     string tipoDelete = "";
+    string path;
+    path = deleteCaracter(ruta, '\"');
     if (strcasecmp(delette.c_str(), "fast") == 0)
     {
         tipoDelete = "Fast";
@@ -665,7 +689,7 @@ void EliminarParticion(string path, string name, string delette)
                     fclose(file);
                     if (tipoDelete == "Full")
                     {
-                        // formateofull(path, logica.part_start, (sizeof(EBR) + logica.part_size));
+                        formateofull(path, logica.part_start, (sizeof(EBR) + logica.part_size));
                     }
                     for (auto &&logica : listaebr)
                     {
@@ -696,7 +720,7 @@ void EliminarParticion(string path, string name, string delette)
             ModificarDiscof(nuevombr, path);
             if (tipoDelete == "Full")
             {
-                // formateofull(path, particion.part_start, particion.part_size);
+                formateofull(path, particion.part_start, particion.part_size);
             }
         }
     }
@@ -708,6 +732,19 @@ void EliminarParticion(string path, string name, string delette)
     }
     OrdenarParticiones(nuevombr.mbr_partition);
     cout << "Se Elimino la particion" << endl;
+    if (!raid)
+    {
+        // tengo que trabajar sobre el raid
+        string pathraid;
+        vector<string> auxraid = split(path, ".");
+        pathraid = auxraid[0] + "_raid.dsk";
+        string comandoraid = "cp -a \"" + path + "\" \"" + pathraid + "\"";
+        int status2 = system(comandoraid.c_str());
+        if (status2 == 0)
+            cout << "Raid Creado" << endl;
+        else
+            cout << "ocurrio un error" << endl;
+    }
 }
 
 void efeDisk(char *tokens)
@@ -862,5 +899,20 @@ void efeDisk(char *tokens)
     {
         // aqui va el delete
         // EliminarParticion(path, name, delette);
+        if (!fileExists(deleteCaracter(path, '\"')))
+        {
+            // si no existe se tiene que trabajar en el raid
+            string path_raid = deleteCaracter(path, '\"');
+            vector<string> aux = split(path_raid, ".");
+            path_raid = "\"" + aux[0] + "_raid.dsk\"";
+            // crearParticion(path_raid, u, tam, name, type, fit, true);
+            EliminarParticion(path_raid, name, delette, true);
+
+            // hola uwu
+        }
+        else
+        {
+            EliminarParticion(path, name, delette, false);
+        }
     }
 }
