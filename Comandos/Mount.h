@@ -39,20 +39,34 @@ bool existeDisco(string path)
     return false;
 }
 
-/*void desmontar(vector<string> parametros)
+void desmontar(char *tokens)
 {
     string ident = "";
     bool existeid = false;
-    for (string parametro : parametros)
+    vector<string> params = split(tokens, "$");
+    // limpiando parametros
+    // recorreremos los parametros
+    for (auto &&parametro : params)
     {
-        vector<string> paras = Split(parametro, '=');
-        if (conminusculas(paras[0]) == "-id")
+        char *str_aux = strdup(parametro.c_str());
+        char *newtoken = strtok(str_aux, "=>");
+        // cout << "Parametro: " << newtoken;
+        // cout << " Valor: " << newtoken << endl;
+        if (strcasecmp(newtoken, "id") == 0)
         {
-            ident = paras[1];
+            // tomar el dato de size
+            newtoken = strtok(NULL, ">");
+            ident = newtoken;
+            // quitar las comillas al name
+            if (ident[0] == '\"')
+            {
+                ident.erase(ident.begin());
+                ident.erase(ident.size() - 1);
+            }
         }
         else
         {
-            cout << "Parametro no reconocido del comando umount" << endl;
+            cout << "El parametro [" << newtoken << "] no es reconocido por UNMOUNT" << endl;
             return;
         }
     }
@@ -80,7 +94,7 @@ bool existeDisco(string path)
         cout << "No existe particion montada con el id " + ident << endl;
         return;
     }
-}//*/
+} //*/
 
 void montar(char *tokens)
 {
@@ -123,7 +137,7 @@ void montar(char *tokens)
         }
         else
         {
-            cout << "El parametro [" << newtoken << "] no es reconocido por MKDISK" << endl;
+            cout << "El parametro [" << newtoken << "] no es reconocido por MOUNT" << endl;
             return;
         }
     }
@@ -164,6 +178,7 @@ void montar(char *tokens)
                 string nlog = logica.part_name;
                 if (name == nlog)
                 {
+                    logica.part_status = '1';
                     logica.part_next = -1;
                     existepart = true;
                     eslogica = true;

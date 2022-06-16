@@ -443,6 +443,7 @@ void crearParticion(string path, string unit, int size, string name, string type
             {
                 listaebr[i].part_fit = particionExtendida.part_fit;
                 listaebr[i].part_size = taman;
+                listaebr[i].part_status = '0';
                 strcpy(listaebr[i].part_name, nombre);
                 listaebr[i].part_start = byteinicioL;
                 break;
@@ -679,6 +680,7 @@ void EliminarParticion(string ruta, string name, string delette, bool raid)
                     logica.part_fit = 'P';
                     logica.part_start = (particion.part_start + particion.part_size);
                     logica.part_next = -1;
+                    logica.part_status = '0';
                     existepart = true;
                     eslogica = true;
                     OrdenarArreglo(listaebr);

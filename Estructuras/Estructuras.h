@@ -31,6 +31,7 @@ struct MBR
 
 struct EBR
 {
+    char part_status;
     char part_fit;
     int part_start;
     int part_size;
