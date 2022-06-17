@@ -153,3 +153,5 @@ umount $id1=>vda1 $id2=>vdb2 $id=>vda2
 mount
 /*Salida es la siguiente*/
 /*id=>vdb1 $PAth=>"/tmp/archivos/fase 1/D1.dsk" $nAMe=>PRI3*/
+
+/mkfs $ID=>vdb1 @type=>full

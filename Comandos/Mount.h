@@ -43,6 +43,7 @@ void desmontar(char *tokens)
 {
     // faltaria la lista de ids
     string ident = "";
+    vector<string> listadoides;
     bool existeid = false;
     vector<string> params = split(tokens, "$");
     // limpiando parametros
@@ -64,6 +65,7 @@ void desmontar(char *tokens)
                 ident.erase(ident.begin());
                 ident.erase(ident.size() - 1);
             }
+            listadoides.push_back(ident);
         }
         else
         {
@@ -72,22 +74,25 @@ void desmontar(char *tokens)
         }
     }
     // buscar el id en la lista de particiones montadas
-    for (auto &&disk : listaDisco)
+    for (auto &&id : listadoides)
     {
-        int ite = 0;
-        for (auto &&partm : disk.listaparticiones)
+        for (auto &&disk : listaDisco)
         {
-            string idpart = partm.id;
-            if (idpart == ident)
+            int ite = 0;
+            for (auto &&partm : disk.listaparticiones)
             {
-                // se eliminara de la lista
-                disk.listaparticiones.erase(disk.listaparticiones.begin() + ite);
-                // se desmonto
-                cout << "se desmonto la particion" << endl;
-                existeid = true;
-            }
+                string idpart = partm.id;
 
-            ite++;
+                if (idpart == id)
+                {
+                    // se eliminara de la lista
+                    disk.listaparticiones.erase(disk.listaparticiones.begin() + ite);
+                    // se desmonto
+                    cout << "se desmonto la particion" << endl;
+                    existeid = true;
+                }
+                ite++;
+            }
         }
     }
     if (!existeid)
@@ -105,6 +110,7 @@ void montar(char *tokens)
     string name = "";
     bool existepart = false;
     bool eslogica = false;
+    bool israid = false;
     vector<string> params = split(tokens, "$");
     // limpiando parametros
     // recorreremos los parametros
@@ -155,6 +161,7 @@ void montar(char *tokens)
         vector<string> aux = split(path_raid, ".");
         path_raid = "\"" + aux[0] + "_raid.dsk\"";
         path = path_raid;
+        israid = true;
         // crearParticion(path_raid, u, tam, name, type, fit, true);
         if (!fileExists(deleteCaracter(path_raid, '\"')))
         {
@@ -242,6 +249,19 @@ void montar(char *tokens)
             break;
         }
     }
+    if (!israid)
+    {
+        string pathraid;
+        vector<string> auxraid = split(path, ".");
+        pathraid = auxraid[0] + "_raid.dsk";
+        string comandoraid = "cp -a \"" + path + "\" \"" + pathraid + "\"";
+        int status2 = system(comandoraid.c_str());
+        if (status2 == 0)
+            cout << "Raid Creado" << endl;
+        else
+            cout << "ocurrio un error" << endl;
+    }
+
     cout << "Se Monto la particion la particion" << endl;
     cout << "-----------------------------------------" << endl;
     for (auto &&disco : listaDisco)

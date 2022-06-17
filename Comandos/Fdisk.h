@@ -442,7 +442,7 @@ void crearParticion(string path, string unit, int size, string name, string type
         {
             if (listaebr[i].part_size == 0)
             {
-                listaebr[i].part_fit = particionExtendida.part_fit;
+                listaebr[i].part_fit = fit;
                 listaebr[i].part_size = taman;
                 listaebr[i].part_status = '0';
                 strcpy(listaebr[i].part_name, nombre);

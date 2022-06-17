@@ -6,7 +6,7 @@ mbr[label=<
 <table border="1" cellborder="1" cellspacing="0">
 <tr><td>Nombre</td><td>Valor</td></tr>
 <tr><td>mbr_tam</td><td>125829120</td></tr>
-<tr><td>mbr_fechaCreacion</td><td>1655422295</td></tr>
+<tr><td>mbr_fechaCreacion</td><td>1655496000</td></tr>
 <tr><td>mbr_disksignature</td><td>383</td></tr>
 <tr><td>disk_fit</td><td></td></tr>
 <tr><td>part_status_1</td><td>0</td></tr>
@@ -113,7 +113,7 @@ EBR7[label=<
 <tr><td>Nombre</td><td>Valor</td></tr>
 <tr><td>part_status_7</td><td>0</td></tr>
 <tr><td>part_name_7</td><td>LOG8</td></tr>
-<tr><td>part_fit_7</td><td>W</td></tr>
+<tr><td>part_fit_7</td><td>B</td></tr>
 <tr><td>part_start_7</td><td>52429170</td></tr>
 <tr><td>part_size_7</td><td>5242880</td></tr>
 <tr><td>part_next_7</td><td>-1</td></tr>

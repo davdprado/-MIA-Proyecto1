@@ -71,3 +71,46 @@ struct Super_Block
     int s_inode_start;
     int s_block_start;
 };
+
+struct Inodo_Table
+{
+    int i_uid;
+    int i_gid;
+    int i_size;
+    int i_block[15];
+    char i_type;
+    time_t i_atime;
+    time_t i_ctime;
+    time_t i_mtime;
+};
+struct Content
+{
+    char b_name[12];
+    int b_inodo;
+};
+
+struct Carpet_Block
+{
+    Content b_content[4];
+};
+
+struct File_Block
+{
+    char b_content[64];
+};
+
+struct Apuntadores_Block
+{
+    int b_pointer[16];
+};
+
+typedef struct
+{
+    char journal_operation_type[12];
+    int journal_type;
+    char journal_name[100];
+    char journal_content[100];
+    time_t journal_date;
+    int journal_owner;
+    int journal_permissions;
+} Journal;

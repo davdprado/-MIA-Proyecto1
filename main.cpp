@@ -7,6 +7,7 @@
 #include "Comandos/Fdisk.h"
 #include "Comandos/Mount.h"
 #include "Comandos/Rep.h"
+#include "Comandos/Mkfs.h"
 using namespace std;
 
 void comandos(string comand_line)
@@ -42,17 +43,39 @@ void comandos(string comand_line)
     else if (strcasecmp(token, "mount") == 0)
     {
         token = strtok(NULL, "");
-        montar(token);
+        if (token == NULL)
+        {
+            cout << "-----------------------------------------" << endl;
+            for (auto &&disco : listaDisco)
+            {
+                for (auto &&parti : disco.listaparticiones)
+                {
+                    cout << disco.path << " | ";
+                    cout << parti.nombre << " | ";
+                    cout << parti.id << endl;
+                }
+            }
+            cout << "-----------------------------------------" << endl;
+        }
+        else
+        {
+            montar(token);
+        }
     }
     else if (strcasecmp(token, "unmount") == 0)
     {
         token = strtok(NULL, "");
-        montar(token);
+        desmontar(token);
     }
     else if (strcasecmp(token, "rep") == 0)
     {
         token = strtok(NULL, "");
         reportes(token);
+    }
+    else if (strcasecmp(token, "mkfs") == 0)
+    {
+        token = strtok(NULL, "");
+        darformato(token);
     }
     else if (strcasecmp(token, "exec") == 0)
     {
