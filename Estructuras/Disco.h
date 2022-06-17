@@ -11,10 +11,10 @@ public:
     string path;
     char letra;
     vector<partmount> listaparticiones;
-    Disco(int num, string ruta)
+    Disco(char let, string ruta)
     {
-        numero = num;
+        numero = 1;
         path = ruta;
-        letra = 'a';
+        letra = let;
     }
 };

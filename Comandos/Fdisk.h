@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -611,7 +612,7 @@ void crearParticion(string path, string unit, int size, string name, string type
         }
         else
         {
-            ModificarDiscof(nuevombr, path);
+            ModificarDiscof(nuevombr, deleteCaracter(path, '\"'));
         }
         // xd
     }
@@ -719,7 +720,7 @@ void EliminarParticion(string ruta, string name, string delette, bool raid)
             // activar bandera
             existepart = true;
             OrdenarParticiones(nuevombr.mbr_partition);
-            ModificarDiscof(nuevombr, path);
+            ModificarDiscof(nuevombr, deleteCaracter(path, '\"'));
             if (tipoDelete == "Full")
             {
                 formateofull(path, particion.part_start, particion.part_size);

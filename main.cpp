@@ -6,6 +6,7 @@
 #include "Comandos/Rmdisk.h"
 #include "Comandos/Fdisk.h"
 #include "Comandos/Mount.h"
+#include "Comandos/Rep.h"
 using namespace std;
 
 void comandos(string comand_line)
@@ -42,6 +43,16 @@ void comandos(string comand_line)
     {
         token = strtok(NULL, "");
         montar(token);
+    }
+    else if (strcasecmp(token, "unmount") == 0)
+    {
+        token = strtok(NULL, "");
+        montar(token);
+    }
+    else if (strcasecmp(token, "rep") == 0)
+    {
+        token = strtok(NULL, "");
+        reportes(token);
     }
     else if (strcasecmp(token, "exec") == 0)
     {

@@ -25,7 +25,7 @@ using namespace std;
 
 // funciones que pueden servir de este lado del mundo
 vector<Disco> listaDisco;
-int contador = 1;
+char contador = 'a';
 
 bool existeDisco(string path)
 {
@@ -41,6 +41,7 @@ bool existeDisco(string path)
 
 void desmontar(char *tokens)
 {
+    // faltaria la lista de ids
     string ident = "";
     bool existeid = false;
     vector<string> params = split(tokens, "$");
@@ -148,6 +149,20 @@ void montar(char *tokens)
     }
     // hora de montar el disco
     // ver si el disco existe por medio del path
+    if (!fileExists(deleteCaracter(path, '\"')))
+    {
+        string path_raid = deleteCaracter(path, '\"');
+        vector<string> aux = split(path_raid, ".");
+        path_raid = "\"" + aux[0] + "_raid.dsk\"";
+        path = path_raid;
+        // crearParticion(path_raid, u, tam, name, type, fit, true);
+        if (!fileExists(deleteCaracter(path_raid, '\"')))
+        {
+            cout << "No existe disco con ruta: " + path_raid << endl;
+            return;
+        }
+    }
+
     if (!existeDisco(deleteCaracter(path, '\"')))
     {
         // crear disco
@@ -158,7 +173,7 @@ void montar(char *tokens)
     }
 
     MBR mbrviejo;
-    mbrviejo = ObtenerDatosDisco(path);
+    mbrviejo = ObtenerDatosDisco(deleteCaracter(path, '\"'));
     partmount nuevamont;
     for (auto &&parti : mbrviejo.mbr_partition)
     {
@@ -166,7 +181,7 @@ void montar(char *tokens)
         if (parti.part_type == 'E')
         {
             EBR listaebr[14];
-            string s = path;
+            string s = deleteCaracter(path, '\"');
             char sc[s.size() + 1];
             strcpy(sc, s.c_str());
             FILE *file = fopen(sc, "rb+");
@@ -197,7 +212,7 @@ void montar(char *tokens)
             // cout << "Logro entrar aqui" << endl;
             parti.part_status = '1';
             OrdenarParticiones(mbrviejo.mbr_partition);
-            ModificarDiscof(mbrviejo, path);
+            ModificarDiscof(mbrviejo, deleteCaracter(path, '\"'));
             // se crea la particion
             strcpy(nuevamont.nombre, name.c_str());
             // cout << "jijis: " << name << " - " << newid << endl;
@@ -211,10 +226,11 @@ void montar(char *tokens)
         cout << "no se encontro la particion con el nombre: " + name << " Mount" << endl;
         return;
     }
-    // cout << "Paso el primerfiltro" << endl;
+    // falta el raid
+    //  cout << "Paso el primerfiltro" << endl;
     for (auto &&disk : listaDisco)
     {
-        if (disk.path == path)
+        if (disk.path == deleteCaracter(path, '\"'))
         {
             string newid;
             newid = newid + "vd";
@@ -222,7 +238,7 @@ void montar(char *tokens)
             newid += to_string(disk.numero);
             strcpy(nuevamont.id, newid.c_str());
             disk.listaparticiones.push_back(nuevamont);
-            disk.letra = disk.letra + 1;
+            disk.numero = disk.numero + 1;
             break;
         }
     }
