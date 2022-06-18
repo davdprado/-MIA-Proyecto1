@@ -9,6 +9,7 @@
 #include "Comandos/Rep.h"
 #include "Comandos/Mkfs.h"
 #include "Comandos/Mkfile.h"
+#include "Comandos/Mkdir.h"
 using namespace std;
 
 void comandos(string comand_line)
@@ -83,6 +84,12 @@ void comandos(string comand_line)
         token = strtok(NULL, "");
         // darformato(token);
         makefile(token);
+    }
+    else if (strcasecmp(token, "mkdir") == 0)
+    {
+        token = strtok(NULL, "");
+        // darformato(token);
+        mkdirr(token);
     }
     else if (strcasecmp(token, "exec") == 0)
     {

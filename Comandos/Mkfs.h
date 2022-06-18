@@ -25,6 +25,22 @@
 #include "./Mount.h"
 
 using namespace std;
+
+string obtenerRutaDiscos(string id)
+{
+    for (auto &&disk : listaDisco)
+    {
+        for (auto &&partid : disk.listaparticiones)
+        {
+            string idstring = partid.id;
+            if (idstring == id)
+            {
+                return disk.path;
+            }
+        }
+    }
+    return " ";
+}
 int getN(int tam_particion)
 {
     int tam_SuperBlock = sizeof(Super_Block);
@@ -373,7 +389,7 @@ void darformato(char *tokens)
         tipodelete = "Full";
     }
     // necesitamos darle un formato a nuestro disco
-    string rutadisco = obtenerRutaDiscol(id);
+    string rutadisco = obtenerRutaDiscos(id);
     if (rutadisco == " ")
     {
         cout << "No se encuentra la particion en ningun disco con el id=> " << id << endl;

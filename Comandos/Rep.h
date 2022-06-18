@@ -16,11 +16,13 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-
-#include "./Mkdisk.h"
-#include "./Fdisk.h"
 #include "../Estructuras/Estructuras.h"
 #include "../Estructuras/Disco.h"
+#include "./Mkdisk.h"
+#include "./Fdisk.h"
+#include "./Rep.h"
+#include "./Mount.h"
+#include "./Mkfs.h"
 
 using namespace std;
 
@@ -278,6 +280,224 @@ string crearReporteDisco(MBR nuevombr, string rutambr, string rutadestino)
     return grafica;
 }
 
+string crearReporteSB(MBR mbrdisk, string rutadisco, string rutadestino, string name)
+{
+    int startpart, sizepart;
+    for (auto &&parti : mbrdisk.mbr_partition)
+    {
+        string namepart = parti.part_name;
+        if (parti.part_type == 'E')
+        {
+            EBR listaebr[14];
+            string s = deleteCaracter(rutadisco, '\"');
+            char sc[s.size() + 1];
+            strcpy(sc, s.c_str());
+            FILE *file = fopen(sc, "rb+");
+            fseek(file, parti.part_start, SEEK_SET);
+            fread(&listaebr, sizeof(EBR), 14, file);
+            fclose(file);
+            for (auto &&logica : listaebr)
+            {
+                string nlog = logica.part_name;
+                if (name == nlog)
+                {
+                    startpart = logica.part_start;
+                    sizepart = logica.part_size;
+                }
+            }
+        }
+        if (name == namepart)
+        {
+            // cout << "Logro entrar aqui" << endl;
+            startpart = parti.part_start;
+            sizepart = parti.part_size;
+        }
+    }
+    Super_Block superb;
+    bool existecarpeta = false;
+    string s = rutadisco;
+    char sc[s.size() + 1];
+    strcpy(sc, s.c_str());
+    FILE *file = fopen(sc, "rb+");
+    fseek(file, startpart, SEEK_SET);
+    fread(&superb, sizeof(Super_Block), 1, file);
+    fclose(file);
+    string grafica = "";
+    bool existeEBR = false;
+    int inicioPE = 0;
+    string nombrediscor;
+    grafica += "graph [label = \"Reporte SB " + name + "\"];\n";
+    grafica += "node[shape=plain]\n";
+    grafica += "randir=TB\n";
+    grafica += "SB[label=<\n";
+    grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+    //
+    grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
+    grafica += "<tr><td>inodes_count</td><td>" + to_string(superb.s_inodes_count) + "</td></tr>\n";
+    grafica += "<tr><td>block_count</td><td>" + to_string(superb.s_blocks_count) + "</td></tr>\n";
+    grafica += "<tr><td>first ino</td><td>" + to_string(superb.s_first_ino) + "</td></tr>\n";
+    grafica += "<tr><td>first blo</td><td>" + to_string(superb.s_first_blo) + "</td></tr>\n";
+    grafica += "<tr><td>magic</td><td>" + to_string(superb.s_magic) + "</td></tr>\n";
+    grafica += "<tr><td>bm block start</td><td>" + to_string(superb.s_bm_block_start) + "</td></tr>\n";
+    grafica += "<tr><td>bm inode start</td><td>" + to_string(superb.s_bm_inode_start) + "</td></tr>\n";
+    grafica += "<tr><td>inode start</td><td>" + to_string(superb.s_inode_start) + "</td></tr>\n";
+    grafica += "<tr><td>block start</td><td>" + to_string(superb.s_block_start) + "</td></tr>\n";
+    grafica += "<tr><td>free block</td><td>" + to_string(superb.s_free_blocks_count) + "</td></tr>\n";
+    grafica += "<tr><td>free inodes</td><td>" + to_string(superb.s_free_inodes_count) + "</td></tr>\n";
+
+    // recorremos las particiones
+    grafica += "\n</table>\n";
+    grafica += ">];\n";
+    return grafica;
+}
+
+string crearReporteBlock(MBR mbrdisk, string rutadisco, string rutadestino, string name)
+{
+    int startpart, sizepart;
+    for (auto &&parti : mbrdisk.mbr_partition)
+    {
+        string namepart = parti.part_name;
+        if (parti.part_type == 'E')
+        {
+            EBR listaebr[14];
+            string s = deleteCaracter(rutadisco, '\"');
+            char sc[s.size() + 1];
+            strcpy(sc, s.c_str());
+            FILE *file = fopen(sc, "rb+");
+            fseek(file, parti.part_start, SEEK_SET);
+            fread(&listaebr, sizeof(EBR), 14, file);
+            fclose(file);
+            for (auto &&logica : listaebr)
+            {
+                string nlog = logica.part_name;
+                if (name == nlog)
+                {
+                    startpart = logica.part_start;
+                    sizepart = logica.part_size;
+                }
+            }
+        }
+        if (name == namepart)
+        {
+            // cout << "Logro entrar aqui" << endl;
+            startpart = parti.part_start;
+            sizepart = parti.part_size;
+        }
+    }
+    Super_Block superb;
+    bool existecarpeta = false;
+    string s = rutadisco;
+    char sc[s.size() + 1];
+    strcpy(sc, s.c_str());
+    FILE *file = fopen(sc, "rb+");
+    fseek(file, startpart, SEEK_SET);
+    fread(&superb, sizeof(Super_Block), 1, file);
+    fclose(file);
+    string grafica = "";
+    bool existeEBR = false;
+    int inicioPE = 0;
+    string nombrediscor;
+    grafica += "graph [label = \"Reporte SB " + name + "\"];\n";
+    grafica += "node[shape=plain]\n";
+    grafica += "randir=TB\n";
+    grafica += "SB[label=<\n";
+    grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+    //
+    grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
+    grafica += "<tr><td>inodes_count</td><td>" + to_string(superb.s_inodes_count) + "</td></tr>\n";
+    grafica += "<tr><td>block_count</td><td>" + to_string(superb.s_blocks_count) + "</td></tr>\n";
+    grafica += "<tr><td>first ino</td><td>" + to_string(superb.s_first_ino) + "</td></tr>\n";
+    grafica += "<tr><td>first blo</td><td>" + to_string(superb.s_first_blo) + "</td></tr>\n";
+    grafica += "<tr><td>magic</td><td>" + to_string(superb.s_magic) + "</td></tr>\n";
+    grafica += "<tr><td>bm block start</td><td>" + to_string(superb.s_bm_block_start) + "</td></tr>\n";
+    grafica += "<tr><td>bm inode start</td><td>" + to_string(superb.s_bm_inode_start) + "</td></tr>\n";
+    grafica += "<tr><td>inode start</td><td>" + to_string(superb.s_inode_start) + "</td></tr>\n";
+    grafica += "<tr><td>block start</td><td>" + to_string(superb.s_block_start) + "</td></tr>\n";
+    grafica += "<tr><td>free block</td><td>" + to_string(superb.s_free_blocks_count) + "</td></tr>\n";
+    grafica += "<tr><td>free inodes</td><td>" + to_string(superb.s_free_inodes_count) + "</td></tr>\n";
+
+    // recorremos las particiones
+    grafica += "\n</table>\n";
+    grafica += ">];\n";
+    return grafica;
+}
+string crearReporteInode(MBR mbrdisk, string rutadisco, string rutadestino, string name)
+{
+    int startpart, sizepart;
+    for (auto &&parti : mbrdisk.mbr_partition)
+    {
+        string namepart = parti.part_name;
+        if (parti.part_type == 'E')
+        {
+            EBR listaebr[14];
+            string s = deleteCaracter(rutadisco, '\"');
+            char sc[s.size() + 1];
+            strcpy(sc, s.c_str());
+            FILE *file = fopen(sc, "rb+");
+            fseek(file, parti.part_start, SEEK_SET);
+            fread(&listaebr, sizeof(EBR), 14, file);
+            fclose(file);
+            for (auto &&logica : listaebr)
+            {
+                string nlog = logica.part_name;
+                if (name == nlog)
+                {
+                    startpart = logica.part_start;
+                    sizepart = logica.part_size;
+                }
+            }
+        }
+        if (name == namepart)
+        {
+            // cout << "Logro entrar aqui" << endl;
+            startpart = parti.part_start;
+            sizepart = parti.part_size;
+        }
+    }
+    Super_Block superb;
+    bool existecarpeta = false;
+    string s = rutadisco;
+    char sc[s.size() + 1];
+    strcpy(sc, s.c_str());
+    FILE *file = fopen(sc, "rb+");
+    fseek(file, startpart, SEEK_SET);
+    fread(&superb, sizeof(Super_Block), 1, file);
+
+    Inodo_Table lisinodes[superb.s_first_ino - 1];
+    fseek(file, superb.s_inode_start, SEEK_SET);
+    fread(&lisinodes, sizeof(Inodo_Table), superb.s_first_ino - 1, file);
+    fclose(file);
+    string grafica = "";
+    bool existeEBR = false;
+    int inicioPE = 0;
+    string nombrediscor;
+    grafica += "graph [label = \"Reporte Inode " + name + "\"];\n";
+    grafica += "node[shape=plain]\n";
+    grafica += "randir=TB\n";
+    for (auto &&ino : lisinodes)
+    {
+        grafica += to_string(inicioPE) + "[label=<\n";
+        grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+        //
+        grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
+        grafica += "<tr><td>uid</td><td>" + to_string(ino.i_uid) + "</td></tr>\n";
+        grafica += "<tr><td>gid</td><td>" + to_string(ino.i_gid) + "</td></tr>\n";
+        grafica += "<tr><td>size</td><td>" + to_string(ino.i_size) + "</td></tr>\n";
+        grafica += "<tr><td>type</td><td>" + to_string(ino.i_type) + "</td></tr>\n";
+        grafica += "<tr><td>block</td><td> ---- </td></tr>\n";
+        for (int i = 0; i < 15; i++)
+        {
+            grafica += "<tr><td>A" + to_string(i) + "</td><td>" + to_string(ino.i_block[i]) + "</td></tr>\n";
+        }
+        grafica += "\n</table>\n";
+        grafica += ">];\n";
+        inicioPE++;
+    }
+    // recorremos las particiones
+
+    return grafica;
+}
+
 void reportes(char *tokens)
 {
     string rutadestino = "";
@@ -351,6 +571,14 @@ void reportes(char *tokens)
     {
         reptype = "Sb";
     }
+    else if (strcasecmp(reptype.c_str(), "block") == 0)
+    {
+        reptype = "Block";
+    }
+    else if (strcasecmp(reptype.c_str(), "inode") == 0)
+    {
+        reptype = "Inode";
+    }
     else
     {
         cout << "Atributo erroneo para el reporte" << endl;
@@ -411,7 +639,50 @@ void reportes(char *tokens)
     }
     else if (reptype == "Sb")
     {
-        // codegrafica += crearReporteDisco(newmbr, rutadisco, rutadestino);
+        string namePartition = "";
+        for (auto &&disco : listaDisco)
+        {
+            for (auto &&parti : disco.listaparticiones)
+            {
+                if (parti.id == nombreid)
+                {
+                    namePartition = parti.nombre;
+                }
+            }
+        }
+        codegrafica += crearReporteSB(newmbr, rutadisco, rutadestino, namePartition);
+        //  escribir en el dot
+    }
+    else if (reptype == "Block")
+    {
+        string namePartition = "";
+        for (auto &&disco : listaDisco)
+        {
+            for (auto &&parti : disco.listaparticiones)
+            {
+                if (parti.id == nombreid)
+                {
+                    namePartition = parti.nombre;
+                }
+            }
+        }
+        codegrafica += crearReporteBlock(newmbr, rutadisco, rutadestino, namePartition);
+        //  escribir en el dot
+    }
+    else if (reptype == "Inode")
+    {
+        string namePartition = "";
+        for (auto &&disco : listaDisco)
+        {
+            for (auto &&parti : disco.listaparticiones)
+            {
+                if (parti.id == nombreid)
+                {
+                    namePartition = parti.nombre;
+                }
+            }
+        }
+        codegrafica += crearReporteInode(newmbr, rutadisco, rutadestino, namePartition);
         //  escribir en el dot
     }
     codegrafica += "}";

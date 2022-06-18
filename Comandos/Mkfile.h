@@ -80,6 +80,7 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
     {
         /* code */
     }
+    fclose(file);
 
     // verificar si existe el archivo cont
 }

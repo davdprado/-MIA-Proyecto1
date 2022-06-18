@@ -1,122 +1,21 @@
 digraph G{
-graph [label = "Reporte mbr D1.dsk"];
+graph [label = "Reporte SB PRI3"];
 node[shape=plain]
 randir=TB
-mbr[label=<
+SB[label=<
 <table border="1" cellborder="1" cellspacing="0">
 <tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>mbr_tam</td><td>125829120</td></tr>
-<tr><td>mbr_fechaCreacion</td><td>1655496000</td></tr>
-<tr><td>mbr_disksignature</td><td>383</td></tr>
-<tr><td>disk_fit</td><td></td></tr>
-<tr><td>part_status_1</td><td>0</td></tr>
-<tr><td>part_type_1</td><td>P</td></tr>
-<tr><td>part_fit_1</td><td>F</td></tr>
-<tr><td>part_start_1</td><td>137</td></tr>
-<tr><td>part_size_1</td><td>10485760</td></tr>
-<tr><td>part_name_1</td><td>PRI1</td></tr>
-<tr><td>part_status_2</td><td>0</td></tr>
-<tr><td>part_type_2</td><td>P</td></tr>
-<tr><td>part_fit_2</td><td>F</td></tr>
-<tr><td>part_start_2</td><td>10485898</td></tr>
-<tr><td>part_size_2</td><td>5242880</td></tr>
-<tr><td>part_name_2</td><td>PRI2</td></tr>
-<tr><td>part_status_3</td><td>0</td></tr>
-<tr><td>part_type_3</td><td>E</td></tr>
-<tr><td>part_fit_3</td><td>W</td></tr>
-<tr><td>part_start_3</td><td>15728779</td></tr>
-<tr><td>part_size_3</td><td>52428800</td></tr>
-<tr><td>part_name_3</td><td>EXT</td></tr>
-<tr><td>part_status_4</td><td>1</td></tr>
-<tr><td>part_type_4</td><td>P</td></tr>
-<tr><td>part_fit_4</td><td>W</td></tr>
-<tr><td>part_start_4</td><td>68157580</td></tr>
-<tr><td>part_size_4</td><td>5242880</td></tr>
-<tr><td>part_name_4</td><td>PRI3</td></tr>
-
-</table>
->];
-EBR1[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_1</td><td>0</td></tr>
-<tr><td>part_name_1</td><td>LOG1</td></tr>
-<tr><td>part_fit_1</td><td>W</td></tr>
-<tr><td>part_start_1</td><td>15728779</td></tr>
-<tr><td>part_size_1</td><td>5242880</td></tr>
-<tr><td>part_next_1</td><td>20971692</td></tr>
-
-</table>
->];
-EBR2[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_2</td><td>0</td></tr>
-<tr><td>part_name_2</td><td>LOG2</td></tr>
-<tr><td>part_fit_2</td><td>W</td></tr>
-<tr><td>part_start_2</td><td>20971692</td></tr>
-<tr><td>part_size_2</td><td>5242880</td></tr>
-<tr><td>part_next_2</td><td>26214605</td></tr>
-
-</table>
->];
-EBR3[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_3</td><td>0</td></tr>
-<tr><td>part_name_3</td><td>LOG3</td></tr>
-<tr><td>part_fit_3</td><td>W</td></tr>
-<tr><td>part_start_3</td><td>26214605</td></tr>
-<tr><td>part_size_3</td><td>5242880</td></tr>
-<tr><td>part_next_3</td><td>31457518</td></tr>
-
-</table>
->];
-EBR4[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_4</td><td>0</td></tr>
-<tr><td>part_name_4</td><td>LOG45</td></tr>
-<tr><td>part_fit_4</td><td>W</td></tr>
-<tr><td>part_start_4</td><td>31457518</td></tr>
-<tr><td>part_size_4</td><td>10485760</td></tr>
-<tr><td>part_next_4</td><td>41943344</td></tr>
-
-</table>
->];
-EBR5[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_5</td><td>0</td></tr>
-<tr><td>part_name_5</td><td>LOG6</td></tr>
-<tr><td>part_fit_5</td><td>W</td></tr>
-<tr><td>part_start_5</td><td>41943344</td></tr>
-<tr><td>part_size_5</td><td>5242880</td></tr>
-<tr><td>part_next_5</td><td>47186257</td></tr>
-
-</table>
->];
-EBR6[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_6</td><td>0</td></tr>
-<tr><td>part_name_6</td><td>LOG7</td></tr>
-<tr><td>part_fit_6</td><td>W</td></tr>
-<tr><td>part_start_6</td><td>47186257</td></tr>
-<tr><td>part_size_6</td><td>5242880</td></tr>
-<tr><td>part_next_6</td><td>52429170</td></tr>
-
-</table>
->];
-EBR7[label=<
-<table border="1" cellborder="1" cellspacing="0">
-<tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>part_status_7</td><td>0</td></tr>
-<tr><td>part_name_7</td><td>LOG8</td></tr>
-<tr><td>part_fit_7</td><td>B</td></tr>
-<tr><td>part_start_7</td><td>52429170</td></tr>
-<tr><td>part_size_7</td><td>5242880</td></tr>
-<tr><td>part_next_7</td><td>-1</td></tr>
+<tr><td>inodes_count</td><td>9854</td></tr>
+<tr><td>block_count</td><td>29562</td></tr>
+<tr><td>first ino</td><td>4</td></tr>
+<tr><td>first blo</td><td>2</td></tr>
+<tr><td>magic</td><td>61267</td></tr>
+<tr><td>bm block start</td><td>9855</td></tr>
+<tr><td>bm inode start</td><td>70443790</td></tr>
+<tr><td>inode start</td><td>39418</td></tr>
+<tr><td>block start</td><td>71468607</td></tr>
+<tr><td>free block</td><td>29560</td></tr>
+<tr><td>free inodes</td><td>9850</td></tr>
 
 </table>
 >];
