@@ -128,6 +128,8 @@ mkdir $id=>vdb1 $path=>"/home"
 mkdir $id=>vdb1 $path=>"/home"
 mkdir $id=>vdb1 $path=>"/tmp"
 mkdir $id=>vdb1 $path=>"/urs"
+rep $path=>"/tmp/archivos/fase 1/reportes/block_Disco1.jpg" $id=>vdb1 $nAMe=>block
+pause
 rep $path=>"/tmp/archivos/fase 1/reportes/Inodos_Disco1.jpg" $id=>vdb1 $nAMe=>inode
 pause
 rep $path=>"/tmp/archivos/fase 1/reportes/sb_disk1.jpg" $id=>vdb1 $nAMe=>sb

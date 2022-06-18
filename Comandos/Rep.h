@@ -392,33 +392,36 @@ string crearReporteBlock(MBR mbrdisk, string rutadisco, string rutadestino, stri
     FILE *file = fopen(sc, "rb+");
     fseek(file, startpart, SEEK_SET);
     fread(&superb, sizeof(Super_Block), 1, file);
+
+    Carpet_Block lisinodes[superb.s_first_blo - 1];
+    fseek(file, superb.s_inode_start, SEEK_SET);
+    fread(&lisinodes, sizeof(Carpet_Block), superb.s_first_blo - 1, file);
     fclose(file);
     string grafica = "";
     bool existeEBR = false;
     int inicioPE = 0;
     string nombrediscor;
-    grafica += "graph [label = \"Reporte SB " + name + "\"];\n";
+    grafica += "graph [label = \"Reporte Block " + name + "\"];\n";
     grafica += "node[shape=plain]\n";
     grafica += "randir=TB\n";
-    grafica += "SB[label=<\n";
-    grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
-    //
-    grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
-    grafica += "<tr><td>inodes_count</td><td>" + to_string(superb.s_inodes_count) + "</td></tr>\n";
-    grafica += "<tr><td>block_count</td><td>" + to_string(superb.s_blocks_count) + "</td></tr>\n";
-    grafica += "<tr><td>first ino</td><td>" + to_string(superb.s_first_ino) + "</td></tr>\n";
-    grafica += "<tr><td>first blo</td><td>" + to_string(superb.s_first_blo) + "</td></tr>\n";
-    grafica += "<tr><td>magic</td><td>" + to_string(superb.s_magic) + "</td></tr>\n";
-    grafica += "<tr><td>bm block start</td><td>" + to_string(superb.s_bm_block_start) + "</td></tr>\n";
-    grafica += "<tr><td>bm inode start</td><td>" + to_string(superb.s_bm_inode_start) + "</td></tr>\n";
-    grafica += "<tr><td>inode start</td><td>" + to_string(superb.s_inode_start) + "</td></tr>\n";
-    grafica += "<tr><td>block start</td><td>" + to_string(superb.s_block_start) + "</td></tr>\n";
-    grafica += "<tr><td>free block</td><td>" + to_string(superb.s_free_blocks_count) + "</td></tr>\n";
-    grafica += "<tr><td>free inodes</td><td>" + to_string(superb.s_free_inodes_count) + "</td></tr>\n";
-
+    for (auto &&ino : lisinodes)
+    {
+        grafica += to_string(inicioPE) + "[label=<\n";
+        grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+        //
+        grafica += "<tr><td>Bloque" + to_string(inicioPE) + "</td></tr>\n";
+        grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
+        for (int i = 0; i < 4; i++)
+        {
+            string str(ino.b_content[i].b_name);
+            grafica += "<tr><td>" + str + "</td><td>" + to_string(ino.b_content[i].b_inodo) + "</td></tr>\n";
+        }
+        grafica += "\n</table>\n";
+        grafica += ">];\n";
+        inicioPE++;
+    }
     // recorremos las particiones
-    grafica += "\n</table>\n";
-    grafica += ">];\n";
+
     return grafica;
 }
 string crearReporteInode(MBR mbrdisk, string rutadisco, string rutadestino, string name)
