@@ -339,6 +339,18 @@ void reportes(char *tokens)
     {
         reptype = "Disk";
     }
+    else if (strcasecmp(reptype.c_str(), "bm_block") == 0)
+    {
+        reptype = "Bm_block";
+    }
+    else if (strcasecmp(reptype.c_str(), "bm_inode") == 0)
+    {
+        reptype = "Bm_inode";
+    }
+    else if (strcasecmp(reptype.c_str(), "sb") == 0)
+    {
+        reptype = "Sb";
+    }
     else
     {
         cout << "Atributo erroneo para el reporte" << endl;
@@ -386,6 +398,21 @@ void reportes(char *tokens)
     {
         codegrafica += crearReporteDisco(newmbr, rutadisco, rutadestino);
         // escribir en el dot
+    }
+    else if (reptype == "Bm_block")
+    {
+        // codegrafica += crearReporteDisco(newmbr, rutadisco, rutadestino);
+        //  escribir en el dot
+    }
+    else if (reptype == "Bm_inode")
+    {
+        // codegrafica += crearReporteDisco(newmbr, rutadisco, rutadestino);
+        //  escribir en el dot
+    }
+    else if (reptype == "Sb")
+    {
+        // codegrafica += crearReporteDisco(newmbr, rutadisco, rutadestino);
+        //  escribir en el dot
     }
     codegrafica += "}";
     string rutadot = "graficaD.dot";

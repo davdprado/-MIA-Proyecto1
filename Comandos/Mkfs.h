@@ -39,6 +39,21 @@ int getN(int tam_particion)
     return n;
 }
 
+void Modificar_Inodo(FILE *disco, Inodo_Table inodo, int pos, int tipo)
+{
+    if (tipo == 0) // ESTE VA SER PARA MODIFICAR FECHA DE LECTURA
+    {
+        inodo.i_atime = time(nullptr);
+    }
+    else if (tipo == 1) // ESTE VA SER PARA MODIFICAR FECHA DE MODIFICACION
+    {
+        inodo.i_mtime = time(nullptr);
+    }
+
+    fseek(disco, pos, SEEK_SET);
+    fwrite(&inodo, sizeof(Inodo_Table), 1, disco);
+}
+
 int getBlockfree(FILE *disco, int block_start, int size)
 {
     fseek(disco, block_start, SEEK_SET);
@@ -138,9 +153,9 @@ void makeExt3(string rutadisco, string id, string name, string type)
     // verificamos si ya existe un superbloque en ese lugar
     //  0 es no
     //  1 es si
-    if (superb.s_block_size = 0)
+    if (superb.s_block_size == 0)
     {
-        // valores para nuestro superbloque
+        // valores para nuestro superbloques
         superb.s_filesystem_type = 3;
         superb.s_inodes_count = n;
         superb.s_blocks_count = 3 * n;
@@ -154,8 +169,8 @@ void makeExt3(string rutadisco, string id, string name, string type)
         superb.s_block_size = sizeof(Carpet_Block);
         superb.s_first_ino = 0;
         superb.s_first_blo = 0;
+        superb.s_bm_inode_start = startpart + sizeof(Super_Block) + 1 + (n * sizeof(Journal)) + 1;
         superb.s_bm_block_start = superb.s_bm_block_start + n + 1;
-        superb.s_bm_block_start = startpart + sizeof(Super_Block) + 1 + (n * sizeof(Journal)) + 1;
         superb.s_inode_start = superb.s_bm_block_start + (3 * n) + 1;
         superb.s_block_start = superb.s_bm_inode_start + n * sizeof(Inodo_Table) + 1;
 
@@ -217,7 +232,7 @@ void makeExt3(string rutadisco, string id, string name, string type)
     // ponemos el primer bloque como 0
     inodot.i_block[0] = 0;
     // posisionamos y escribimos
-    fseek(file2, superb.s_block_start, SEEK_SET);
+    fseek(file2, superb.s_inode_start, SEEK_SET);
     fwrite(&inodot, sizeof(Inodo_Table), 1, file2);
 
     Carpet_Block bloquec;

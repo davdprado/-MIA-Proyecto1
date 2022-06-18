@@ -96,7 +96,7 @@ struct Carpet_Block
 
 struct File_Block
 {
-    char b_content[64];
+    char b_content[10];
 };
 
 struct Apuntadores_Block
