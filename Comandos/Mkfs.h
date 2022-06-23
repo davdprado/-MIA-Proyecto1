@@ -254,14 +254,14 @@ void makeExt3(string rutadisco, string id, string name, string type)
     Carpet_Block bloquec;
     for (int i = 0; i < 15; i++)
     {
+        memset(bloquec.b_content[i].b_name, '\0', sizeof(bloquec.b_content[i].b_name));
         bloquec.b_content[i].b_inodo = -1;
     }
     // actual
-    memset(bloquec.b_content[0].b_name, '\0', sizeof(bloquec.b_content[0].b_name));
+
     strcpy(bloquec.b_content[0].b_name, ".");
     bloquec.b_content[0].b_inodo = 0;
     // anterior<-actual
-    memset(bloquec.b_content[1].b_name, '\0', sizeof(bloquec.b_content[1].b_name));
     strcpy(bloquec.b_content[1].b_name, "..");
     bloquec.b_content[1].b_inodo = 0;
     // se escribe en el archivo binario

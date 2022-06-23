@@ -153,7 +153,6 @@ void crearCarpeta(string rutadisco, string id, string name, bool isP, string car
         {
             if (c_block.b_content[i].b_inodo == -1)
             {
-                memset(c_block.b_content[i].b_name, '\0', sizeof(c_block.b_content[i].b_name));
                 strcpy(c_block.b_content[i].b_name, deleteCaracter(carpetname, '/').c_str());
                 c_block.b_content[i].b_inodo = numinodo;
                 banderacreado = true;

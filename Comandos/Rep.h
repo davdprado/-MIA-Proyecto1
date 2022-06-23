@@ -393,9 +393,9 @@ string crearReporteBlock(MBR mbrdisk, string rutadisco, string rutadestino, stri
     fseek(file, startpart, SEEK_SET);
     fread(&superb, sizeof(Super_Block), 1, file);
 
-    Carpet_Block lisinodes[superb.s_first_blo - 1];
-    fseek(file, superb.s_inode_start, SEEK_SET);
-    fread(&lisinodes, sizeof(Carpet_Block), superb.s_first_blo - 1, file);
+    Carpet_Block lisinodes[superb.s_first_blo];
+    fseek(file, superb.s_block_start, SEEK_SET);
+    fread(&lisinodes, sizeof(Carpet_Block), superb.s_first_blo, file);
     fclose(file);
     string grafica = "";
     bool existeEBR = false;
@@ -413,8 +413,8 @@ string crearReporteBlock(MBR mbrdisk, string rutadisco, string rutadestino, stri
         grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
         for (int i = 0; i < 4; i++)
         {
-            string str(ino.b_content[i].b_name);
-            grafica += "<tr><td>" + str + "</td><td>" + to_string(ino.b_content[i].b_inodo) + "</td></tr>\n";
+            string nombrecarpeta = ino.b_content[i].b_name;
+            grafica += "<tr><td>" + nombrecarpeta + "</td><td>" + to_string(ino.b_content[i].b_inodo) + "</td></tr>\n";
         }
         grafica += "\n</table>\n";
         grafica += ">];\n";
