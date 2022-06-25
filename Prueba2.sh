@@ -127,9 +127,20 @@ rep $path=>"/tmp/archivos/fase 1/reportes/block_Disco1.jpg" $id=>vdb1 $nAMe=>blo
 pause
 mkdir $id=>vdb1 $path=>"/home"
 /*deberia dar error
-mkdir $id=>vdb1 $path=>"/home"
 mkdir $id=>vdb1 $path=>"/tmp"
 mkdir $id=>vdb1 $path=>"/urs"
+mkdir $id=>vdb1 $path=>"/home"
+mkdir $id=>vdb1 $path=>"/user"
+mkdir $id=>vdb1 $path=>"/mia"
+mkdir $id=>vdb1 $path=>"/fase1"
+mkdir $id=>vdb1 $path=>"/b1"
+mkdir $id=>vdb1 $path=>"/b12"
+mkdir $id=>vdb1 $path=>"/b3"
+mkdir $id=>vdb1 $path=>"/b4"
+mkdir $id=>vdb1 $path=>"/b5"
+mkdir $id=>vdb1 $path=>"/b6"
+mkdir $id=>vdb1 $path=>"/b7"
+mkdir $id=>vdb1 $path=>"/b8"
 rep $path=>"/tmp/archivos/fase 1/reportes/block2_Disco1.jpg" $id=>vdb1 $nAMe=>block
 pause
 rep $path=>"/tmp/archivos/fase 1/reportes/Inodos_Disco1.jpg" $id=>vdb1 $nAMe=>inode

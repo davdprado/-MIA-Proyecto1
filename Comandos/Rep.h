@@ -466,9 +466,9 @@ string crearReporteInode(MBR mbrdisk, string rutadisco, string rutadestino, stri
     fseek(file, startpart, SEEK_SET);
     fread(&superb, sizeof(Super_Block), 1, file);
 
-    Inodo_Table lisinodes[superb.s_first_ino - 1];
+    Inodo_Table lisinodes[superb.s_first_ino];
     fseek(file, superb.s_inode_start, SEEK_SET);
-    fread(&lisinodes, sizeof(Inodo_Table), superb.s_first_ino - 1, file);
+    fread(&lisinodes, sizeof(Inodo_Table), superb.s_first_ino, file);
     fclose(file);
     string grafica = "";
     bool existeEBR = false;
@@ -482,6 +482,7 @@ string crearReporteInode(MBR mbrdisk, string rutadisco, string rutadestino, stri
         grafica += to_string(inicioPE) + "[label=<\n";
         grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
         //
+        grafica += "<tr><td>INODO " + to_string(inicioPE) + "</td></tr>\n";
         grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
         grafica += "<tr><td>uid</td><td>" + to_string(ino.i_uid) + "</td></tr>\n";
         grafica += "<tr><td>gid</td><td>" + to_string(ino.i_gid) + "</td></tr>\n";

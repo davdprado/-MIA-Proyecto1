@@ -7,15 +7,15 @@ SB[label=<
 <tr><td>Nombre</td><td>Valor</td></tr>
 <tr><td>inodes_count</td><td>9854</td></tr>
 <tr><td>block_count</td><td>29562</td></tr>
-<tr><td>first ino</td><td>4</td></tr>
-<tr><td>first blo</td><td>2</td></tr>
+<tr><td>first ino</td><td>15</td></tr>
+<tr><td>first blo</td><td>4</td></tr>
 <tr><td>magic</td><td>61267</td></tr>
 <tr><td>bm block start</td><td>9855</td></tr>
 <tr><td>bm inode start</td><td>70443790</td></tr>
 <tr><td>inode start</td><td>39418</td></tr>
 <tr><td>block start</td><td>71468607</td></tr>
-<tr><td>free block</td><td>29560</td></tr>
-<tr><td>free inodes</td><td>9850</td></tr>
+<tr><td>free block</td><td>29558</td></tr>
+<tr><td>free inodes</td><td>9839</td></tr>
 
 </table>
 >];

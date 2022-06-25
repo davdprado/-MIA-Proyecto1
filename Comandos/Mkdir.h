@@ -145,6 +145,9 @@ void crearCarpeta(string rutadisco, string id, string name, bool isP, string car
 
         // modificaremos nuestro bloque
         Carpet_Block c_block;
+        // inicializar el nuevo bloque
+
+        // acaba inizializacion
         fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * numblock), SEEK_SET);
         fread(&c_block, sizeof(Carpet_Block), 1, file);
 
@@ -213,12 +216,13 @@ void crearCarpeta(string rutadisco, string id, string name, bool isP, string car
         Carpet_Block newCarpetab;
         for (int i = 0; i < 4; i++)
         {
+            memset(newCarpetab.b_content[i].b_name, '\0', sizeof(newCarpetab.b_content[i].b_name));
             newCarpetab.b_content[i].b_inodo = -1;
         }
         memset(newCarpetab.b_content[0].b_name, '\0', sizeof(newCarpetab.b_content[1].b_name));
         strcpy(newCarpetab.b_content[0].b_name, deleteCaracter(carpetname, '/').c_str());
         newCarpetab.b_content[0].b_inodo = numinodo;
-        fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * numblock), SEEK_SET);
+        fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * apuntador_raiz), SEEK_SET);
         fwrite(&newCarpetab, sizeof(Carpet_Block), 1, file);
 
         // inodo -> bloque carpeta
