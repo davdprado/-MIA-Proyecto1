@@ -71,15 +71,224 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
     fseek(file, startpart, SEEK_SET);
     fread(&superb, sizeof(Super_Block), 1, file);
 
-    if (isP)
+    // obtengo los datos del super bloque
+
+    // busco si ya existe
+    // buscar el inodo raiz
+    Inodo_Table inoraiz;
+    fseek(file, superb.s_inode_start, SEEK_SET);
+    fread(&inoraiz, sizeof(Inodo_Table), 1, file);
+    // buscar los apuntadores a los bloques
+    int numblock = -2;
+    for (int i = 0; i < 15; i++)
     {
-        // crear las carpetas
+        if (inoraiz.i_block[i] != -1)
+        {
+            // me ubico en el bloque de carpeta
+            Carpet_Block bloqueaux;
+            fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * inoraiz.i_block[i]), SEEK_SET);
+            fread(&bloqueaux, sizeof(Carpet_Block), 1, file);
+            // ver contenido del bloque
+            for (int j = 0; j < 4; j++)
+            {
+                if (bloqueaux.b_content[j].b_inodo != -1)
+                {
+                    if (strcmp(bloqueaux.b_content[j].b_name, deleteCaracter(name, '/').c_str()) == 0)
+                    {
+                        cout << "ya existe la carpeta " + name << endl;
+                        return;
+                    }
+                }
+            }
+        }
     }
-    // verificar si hay parametro cont
-    if (!isP)
+    // si no salio es porque no existe ninguna carpeta con ese nombre
+    // encontrar el primer bloque carpeta disponible si no hay que crear uno
+    for (int i = 0; i < 15; i++)
     {
-        /* code */
+        if (inoraiz.i_block[i] != -1)
+        {
+            // me ubico en el bloque de carpeta
+            Carpet_Block bloqueaux;
+            fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * inoraiz.i_block[i]), SEEK_SET);
+            fread(&bloqueaux, sizeof(Carpet_Block), 1, file);
+            // ver contenido del bloque
+            for (int j = 0; j < 4; j++)
+            {
+                if (bloqueaux.b_content[j].b_inodo == -1)
+                {
+                    numblock = inoraiz.i_block[i];
+                }
+            }
+        }
     }
+    // verificar si hay que crear un nuevo bloque de carpeta
+    if (numblock != -2)
+    {
+        // string donde se guarda lo que lee el archivo
+        string contenido = "";
+        // vector para guardar cada parte del texto y dividirla en 10
+        vector<string> bloquesp;
+        // crear el bloque de carpetas para asi agregarlo al inodo siguiente
+        // extraer el contenido del archivo para nuestro archivo
+        if (!filecont.empty())
+        {
+            // aqui abrir el archivo para nuestro contenido
+            ifstream contenidolec(deleteCaracter(filecont, '\"').c_str());
+            string lineac;
+            while (getline(contenidolec, lineac))
+            {
+                if (!lineac.empty())
+                {
+                    contenido += lineac;
+                }
+            }
+        }
+
+        // agrupar el contendio en grupos
+        string contenido2 = contenido;
+        for (int i = 0; i < contenido.size(); i++)
+        {
+        }
+
+        // solo crear un inodo
+
+        Inodo_Table newinodo;
+        newinodo.i_uid = 1;
+        newinodo.i_gid = 1;
+        newinodo.i_size = 0;
+        newinodo.i_atime = time(nullptr);
+        newinodo.i_ctime = time(nullptr);
+        newinodo.i_mtime = time(nullptr);
+        newinodo.i_type = '1';
+        memset(newinodo.i_block, -1, sizeof(newinodo.i_block));
+        // escribimos nuestro nuebo inodo
+
+        fseek(file, superb.s_inode_start + (sizeof(Inodo_Table) * superb.s_first_ino), SEEK_SET);
+        fwrite(&newinodo, sizeof(Inodo_Table), 1, file);
+        // para saber que inodo poner de enlaze en el bloque de carpeta
+        int numinodo = superb.s_first_ino;
+
+        // modificaremos nuestro bloque
+        Carpet_Block c_block;
+        // inicializar el nuevo bloque
+
+        // acaba inizializacion
+        fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * numblock), SEEK_SET);
+        fread(&c_block, sizeof(Carpet_Block), 1, file);
+
+        bool banderacreado = false;
+        for (int i = 0; i < 4; i++)
+        {
+            if (c_block.b_content[i].b_inodo == -1)
+            {
+                strcpy(c_block.b_content[i].b_name, deleteCaracter(name, '/').c_str());
+                c_block.b_content[i].b_inodo = numinodo;
+                banderacreado = true;
+                break;
+            }
+        }
+        // escribimos nuestro modificado bloquede carpeta
+        fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * numblock), SEEK_SET);
+        fwrite(&c_block, sizeof(Carpet_Block), 1, file);
+        // modificar el bitmap de inodos
+        // y todo lo referente con el inodo
+        int n = floor((sizepart - sizeof(Super_Block)) / (4 + sizeof(Journal) + sizeof(Inodo_Table) + 3 * sizeof(Carpet_Block)));
+        fseek(file, superb.s_bm_inode_start, SEEK_SET);
+        char bm_inodo[n];
+        fread(bm_inodo, sizeof(char), n, file);
+        bm_inodo[superb.s_first_ino] = '1';
+        fseek(file, superb.s_bm_inode_start, SEEK_SET);
+        fwrite(bm_inodo, sizeof(bm_inodo), 1, file);
+
+        // actualizar el superbloque
+        superb.s_first_ino = superb.s_first_ino + 1;
+        superb.s_free_inodes_count = superb.s_free_inodes_count - 1;
+        fseek(file, startpart, SEEK_SET);
+        fwrite(&superb, sizeof(Super_Block), 1, file);
+        // ahora tocara  agregar los cambios para crear los bloques de archivos
+    }
+    else
+    {
+        int n = floor((sizepart - sizeof(Super_Block)) / (4 + sizeof(Journal) + sizeof(Inodo_Table) + 3 * sizeof(Carpet_Block)));
+
+        // crear nuevo bloque de carpeta con su respectivo inodo
+        // buscar el primer puntero disponible
+        int apuntador_raiz = -1;
+        for (int i = 0; i < 15; i++)
+        {
+            if (inoraiz.i_block[i] == -1)
+            {
+                // me ubico en el bloque de carpeta
+                apuntador_raiz = i;
+                break;
+            }
+        }
+
+        Inodo_Table newinodo;
+        newinodo.i_uid = 1;
+        newinodo.i_gid = 1;
+        newinodo.i_size = 0;
+        newinodo.i_atime = time(nullptr);
+        newinodo.i_ctime = time(nullptr);
+        newinodo.i_mtime = time(nullptr);
+        newinodo.i_type = '1';
+        memset(newinodo.i_block, -1, sizeof(newinodo.i_block));
+        // escribimos nuestro nuebo inodo
+        fseek(file, superb.s_inode_start + (sizeof(Inodo_Table) * superb.s_first_ino), SEEK_SET);
+        fwrite(&newinodo, sizeof(Inodo_Table), 1, file);
+        // para saber que inodo poner de enlaze en el bloque de carpeta
+        int numinodo = superb.s_first_ino;
+
+        Carpet_Block newCarpetab;
+        for (int i = 0; i < 4; i++)
+        {
+            memset(newCarpetab.b_content[i].b_name, '\0', sizeof(newCarpetab.b_content[i].b_name));
+            newCarpetab.b_content[i].b_inodo = -1;
+        }
+        memset(newCarpetab.b_content[0].b_name, '\0', sizeof(newCarpetab.b_content[1].b_name));
+        strcpy(newCarpetab.b_content[0].b_name, deleteCaracter(name, '/').c_str());
+        newCarpetab.b_content[0].b_inodo = numinodo;
+        // ahora se pone los datos del tipo de bloque
+        memset(newCarpetab.b_contentf, '\0', sizeof(newCarpetab.b_contentf));
+        newCarpetab.tipo = 'C';
+        fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * apuntador_raiz), SEEK_SET);
+        fwrite(&newCarpetab, sizeof(Carpet_Block), 1, file);
+
+        // inodo -> bloque carpeta
+        inoraiz.i_mtime = time(nullptr);
+        inoraiz.i_block[apuntador_raiz] = superb.s_first_blo;
+        fseek(file, superb.s_inode_start, SEEK_SET);
+        fwrite(&inoraiz, sizeof(Inodo_Table), 1, file);
+
+        // actualizar inodo raiz
+        fseek(file, superb.s_bm_inode_start, SEEK_SET);
+        char bm_inodo[n];
+        fread(bm_inodo, sizeof(char), n, file);
+        bm_inodo[superb.s_first_ino] = '1';
+        fseek(file, superb.s_bm_inode_start, SEEK_SET);
+        fwrite(bm_inodo, sizeof(bm_inodo), 1, file);
+
+        fseek(file, superb.s_bm_block_start, SEEK_SET);
+        char bm_block[3 * n];
+        fread(bm_block, sizeof(char), 3 * n, file);
+        bm_block[superb.s_first_blo] = '1';
+        fseek(file, superb.s_bm_block_start, SEEK_SET);
+        fwrite(bm_block, sizeof(bm_block), 1, file);
+
+        // actualizar conteos del superbloque
+        // conteo de inodos
+        superb.s_first_ino = superb.s_first_ino + 1;
+        superb.s_free_inodes_count = superb.s_free_inodes_count - 1;
+        fseek(file, startpart, SEEK_SET);
+        fwrite(&superb, sizeof(Super_Block), 1, file);
+        // conteo de bloques
+        superb.s_first_blo = superb.s_first_blo + 1;
+        superb.s_free_blocks_count = superb.s_free_blocks_count - 1;
+        fseek(file, startpart, SEEK_SET);
+        fwrite(&superb, sizeof(Super_Block), 1, file);
+    }
+    cout << "se creo el directorio" << name << endl;
     fclose(file);
 
     // verificar si existe el archivo cont

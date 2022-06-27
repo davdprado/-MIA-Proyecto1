@@ -258,7 +258,8 @@ void makeExt3(string rutadisco, string id, string name, string type)
         bloquec.b_content[i].b_inodo = -1;
     }
     // actual
-
+    memset(bloquec.b_contentf, '\0', sizeof(bloquec.b_contentf));
+    bloquec.tipo = 'C';
     strcpy(bloquec.b_content[0].b_name, ".");
     bloquec.b_content[0].b_inodo = 0;
     // anterior<-actual

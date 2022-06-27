@@ -92,6 +92,8 @@ struct Content
 struct Carpet_Block
 {
     Content b_content[4];
+    char b_contentf[10];
+    char tipo;
 };
 
 struct File_Block

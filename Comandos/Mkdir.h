@@ -222,6 +222,9 @@ void crearCarpeta(string rutadisco, string id, string name, bool isP, string car
         memset(newCarpetab.b_content[0].b_name, '\0', sizeof(newCarpetab.b_content[1].b_name));
         strcpy(newCarpetab.b_content[0].b_name, deleteCaracter(carpetname, '/').c_str());
         newCarpetab.b_content[0].b_inodo = numinodo;
+        // ahora se pone los datos del tipo de bloque
+        memset(newCarpetab.b_contentf, '\0', sizeof(newCarpetab.b_contentf));
+        newCarpetab.tipo = 'C';
         fseek(file, superb.s_block_start + (sizeof(Carpet_Block) * apuntador_raiz), SEEK_SET);
         fwrite(&newCarpetab, sizeof(Carpet_Block), 1, file);
 
