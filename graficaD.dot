@@ -1,22 +1,474 @@
 digraph G{
-graph [label = "Reporte SB PRI3"];
-node[shape=plain]
-randir=TB
-SB[label=<
+graph [label = "Reporte Tree PRI3"];
+node[shape=plaintext]
+rankdir=LR
+Inodo0[label=<
 <table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 0</td></tr>
 <tr><td>Nombre</td><td>Valor</td></tr>
-<tr><td>inodes_count</td><td>9230</td></tr>
-<tr><td>block_count</td><td>27690</td></tr>
-<tr><td>first ino</td><td>15</td></tr>
-<tr><td>first blo</td><td>4</td></tr>
-<tr><td>magic</td><td>61267</td></tr>
-<tr><td>bm block start</td><td>9231</td></tr>
-<tr><td>bm inode start</td><td>70299022</td></tr>
-<tr><td>inode start</td><td>36922</td></tr>
-<tr><td>block start</td><td>71258943</td></tr>
-<tr><td>free block</td><td>27686</td></tr>
-<tr><td>free inodes</td><td>9215</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td PORT="f0">0</td></tr>
+<tr><td>A1</td><td PORT="f1">1</td></tr>
+<tr><td>A2</td><td PORT="f2">2</td></tr>
+<tr><td>A3</td><td PORT="f3">3</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
 
 </table>
 >];
+Inodo1[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 1</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo2[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 2</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo3[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 3</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo4[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 4</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo5[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 5</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo6[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 6</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo7[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 7</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo8[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 8</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo9[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 9</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo10[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 10</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo11[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 11</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo12[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 12</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo13[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 13</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>48</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Inodo14[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>INODO 14</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>uid</td><td>1</td></tr>
+<tr><td>gid</td><td>1</td></tr>
+<tr><td>size</td><td>0</td></tr>
+<tr><td>type</td><td>49</td></tr>
+<tr><td>block</td><td> ---- </td></tr>
+<tr><td>A0</td><td>-1</td></tr>
+<tr><td>A1</td><td>-1</td></tr>
+<tr><td>A2</td><td>-1</td></tr>
+<tr><td>A3</td><td>-1</td></tr>
+<tr><td>A4</td><td>-1</td></tr>
+<tr><td>A5</td><td>-1</td></tr>
+<tr><td>A6</td><td>-1</td></tr>
+<tr><td>A7</td><td>-1</td></tr>
+<tr><td>A8</td><td>-1</td></tr>
+<tr><td>A9</td><td>-1</td></tr>
+<tr><td>A10</td><td>-1</td></tr>
+<tr><td>A11</td><td>-1</td></tr>
+<tr><td>A12</td><td>-1</td></tr>
+<tr><td>A13</td><td>-1</td></tr>
+<tr><td>A14</td><td>-1</td></tr>
+
+</table>
+>];
+Block0[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>Bloque0</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>.</td><td PORT="f0">0</td></tr>
+<tr><td>..</td><td PORT="f0">0</td></tr>
+<tr><td>home</td><td PORT="f1">1</td></tr>
+<tr><td>tmp</td><td PORT="f2">2</td></tr>
+
+</table>
+>];
+Block1[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>Bloque1</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>urs</td><td PORT="f3">3</td></tr>
+<tr><td>user</td><td PORT="f4">4</td></tr>
+<tr><td>mia</td><td PORT="f5">5</td></tr>
+<tr><td>fase1</td><td PORT="f6">6</td></tr>
+
+</table>
+>];
+Block2[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>Bloque2</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>b1</td><td PORT="f7">7</td></tr>
+<tr><td>b12</td><td PORT="f8">8</td></tr>
+<tr><td>b3</td><td PORT="f9">9</td></tr>
+<tr><td>b4</td><td PORT="f10">10</td></tr>
+
+</table>
+>];
+Block3[label=<
+<table border="1" cellborder="1" cellspacing="0">
+<tr><td>Bloque3</td></tr>
+<tr><td>Nombre</td><td>Valor</td></tr>
+<tr><td>b5</td><td PORT="f11">11</td></tr>
+<tr><td>b6</td><td PORT="f12">12</td></tr>
+<tr><td>b7</td><td PORT="f13">13</td></tr>
+<tr><td>archivo.txt</td><td PORT="f14">14</td></tr>
+
+</table>
+>];
+Inodo0:f0 -> Block0; 
+Inodo0:f1 -> Block1; 
+Inodo0:f2 -> Block2; 
+Inodo0:f3 -> Block3; 
+Block0:f0 -> Inodo0; 
+Block0:f0 -> Inodo0; 
+Block0:f1 -> Inodo1; 
+Block0:f2 -> Inodo2; 
+Block1:f3 -> Inodo3; 
+Block1:f4 -> Inodo4; 
+Block1:f5 -> Inodo5; 
+Block1:f6 -> Inodo6; 
+Block2:f7 -> Inodo7; 
+Block2:f8 -> Inodo8; 
+Block2:f9 -> Inodo9; 
+Block2:f10 -> Inodo10; 
+Block3:f11 -> Inodo11; 
+Block3:f12 -> Inodo12; 
+Block3:f13 -> Inodo13; 
+Block3:f14 -> Inodo14; 
 }

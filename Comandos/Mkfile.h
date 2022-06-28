@@ -27,7 +27,7 @@
 
 using namespace std;
 
-void datamkfile(string rutadisco, string id, string name, string filecont, bool isP)
+void datamkfile(string rutadisco, string id, string name, string filecont, bool isP, string filename)
 {
     MBR mbrdisk;
     int startpart, sizepart;
@@ -93,9 +93,9 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
             {
                 if (bloqueaux.b_content[j].b_inodo != -1)
                 {
-                    if (strcmp(bloqueaux.b_content[j].b_name, deleteCaracter(name, '/').c_str()) == 0)
+                    if (strcmp(bloqueaux.b_content[j].b_name, deleteCaracter(filename, '/').c_str()) == 0)
                     {
-                        cout << "ya existe la carpeta " + name << endl;
+                        cout << "ya existe la carpeta " + filename << endl;
                         return;
                     }
                 }
@@ -146,10 +146,6 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
         }
 
         // agrupar el contendio en grupos
-        string contenido2 = contenido;
-        for (int i = 0; i < contenido.size(); i++)
-        {
-        }
 
         // solo crear un inodo
 
@@ -182,7 +178,7 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
         {
             if (c_block.b_content[i].b_inodo == -1)
             {
-                strcpy(c_block.b_content[i].b_name, deleteCaracter(name, '/').c_str());
+                strcpy(c_block.b_content[i].b_name, deleteCaracter(filename, '/').c_str());
                 c_block.b_content[i].b_inodo = numinodo;
                 banderacreado = true;
                 break;
@@ -247,7 +243,7 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
             newCarpetab.b_content[i].b_inodo = -1;
         }
         memset(newCarpetab.b_content[0].b_name, '\0', sizeof(newCarpetab.b_content[1].b_name));
-        strcpy(newCarpetab.b_content[0].b_name, deleteCaracter(name, '/').c_str());
+        strcpy(newCarpetab.b_content[0].b_name, deleteCaracter(filename, '/').c_str());
         newCarpetab.b_content[0].b_inodo = numinodo;
         // ahora se pone los datos del tipo de bloque
         memset(newCarpetab.b_contentf, '\0', sizeof(newCarpetab.b_contentf));
@@ -276,7 +272,7 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
         fseek(file, superb.s_bm_block_start, SEEK_SET);
         fwrite(bm_block, sizeof(bm_block), 1, file);
 
-        // actualizar conteos del superbloque
+        // actualizar conteos del superbloquedirectorio
         // conteo de inodos
         superb.s_first_ino = superb.s_first_ino + 1;
         superb.s_free_inodes_count = superb.s_free_inodes_count - 1;
@@ -288,8 +284,13 @@ void datamkfile(string rutadisco, string id, string name, string filecont, bool 
         fseek(file, startpart, SEEK_SET);
         fwrite(&superb, sizeof(Super_Block), 1, file);
     }
-    cout << "se creo el directorio" << name << endl;
+    cout << "se creo el archivo" << filename << endl;
     fclose(file);
+    if (filecont.empty())
+    {
+        cout << "No hay Contenido en este directorio" << endl;
+        return;
+    }
 
     // verificar si existe el archivo cont
 }
@@ -407,6 +408,6 @@ void makefile(char *tokens)
             return;
         }
     }
-    datamkfile(rutadisco, id, namePartition, cont, p);
+    datamkfile(deleteCaracter(rutadisco, '\"'), id, namePartition, cont, p, deleteCaracter(path, '\"'));
     // aqui solo ira el cp del archivo binario
 }

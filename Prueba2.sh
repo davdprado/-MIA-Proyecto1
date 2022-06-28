@@ -140,9 +140,11 @@ mkdir $id=>vdb1 $path=>"/b4"
 mkdir $id=>vdb1 $path=>"/b5"
 mkdir $id=>vdb1 $path=>"/b6"
 mkdir $id=>vdb1 $path=>"/b7"
-mkdir $id=>vdb1 $path=>"/b8"
+mkfile $id=>vdb1 $path=>"/archivo.txt"
 rep $path=>"/tmp/archivos/fase 1/reportes/block2_Disco1.jpg" $id=>vdb1 $nAMe=>block
 pause
 rep $path=>"/tmp/archivos/fase 1/reportes/Inodos_Disco1.jpg" $id=>vdb1 $nAMe=>inode
 pause
 rep $path=>"/tmp/archivos/fase 1/reportes/sb_disk1.jpg" $id=>vdb1 $nAMe=>sb
+rep $path=>"/tmp/archivos/fase 1/reportes/tree_disk1.jpg" $id=>vdb1 $nAMe=>tree
+

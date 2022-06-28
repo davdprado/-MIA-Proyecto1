@@ -406,7 +406,7 @@ string crearReporteBlock(MBR mbrdisk, string rutadisco, string rutadestino, stri
     grafica += "randir=TB\n";
     for (auto &&ino : lisinodes)
     {
-        grafica += to_string(inicioPE) + "[label=<\n";
+        grafica += "Block" + to_string(inicioPE) + "[label=<\n";
         grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
         //
         grafica += "<tr><td>Bloque" + to_string(inicioPE) + "</td></tr>\n";
@@ -502,6 +502,128 @@ string crearReporteInode(MBR mbrdisk, string rutadisco, string rutadestino, stri
     return grafica;
 }
 
+string RepoTree(MBR mbrdisk, string rutadisco, string rutadestino, string name)
+{
+    int startpart, sizepart;
+    for (auto &&parti : mbrdisk.mbr_partition)
+    {
+        string namepart = parti.part_name;
+        if (parti.part_type == 'E')
+        {
+            EBR listaebr[14];
+            string s = deleteCaracter(rutadisco, '\"');
+            char sc[s.size() + 1];
+            strcpy(sc, s.c_str());
+            FILE *file = fopen(sc, "rb+");
+            fseek(file, parti.part_start, SEEK_SET);
+            fread(&listaebr, sizeof(EBR), 14, file);
+            fclose(file);
+            for (auto &&logica : listaebr)
+            {
+                string nlog = logica.part_name;
+                if (name == nlog)
+                {
+                    startpart = logica.part_start;
+                    sizepart = logica.part_size;
+                }
+            }
+        }
+        if (name == namepart)
+        {
+            // cout << "Logro entrar aqui" << endl;
+            startpart = parti.part_start;
+            sizepart = parti.part_size;
+        }
+    }
+    Super_Block superb;
+    bool existecarpeta = false;
+    string s = rutadisco;
+    char sc[s.size() + 1];
+    strcpy(sc, s.c_str());
+    FILE *file = fopen(sc, "rb+");
+    fseek(file, startpart, SEEK_SET);
+    fread(&superb, sizeof(Super_Block), 1, file);
+
+    Inodo_Table lisinodes[superb.s_first_ino];
+    fseek(file, superb.s_inode_start, SEEK_SET);
+    fread(&lisinodes, sizeof(Inodo_Table), superb.s_first_ino, file);
+    Carpet_Block listblocks[superb.s_first_blo];
+    fseek(file, superb.s_block_start, SEEK_SET);
+    fread(&listblocks, sizeof(Carpet_Block), superb.s_first_blo, file);
+    fclose(file);
+    string grafica = "";
+    bool existeEBR = false;
+    int inicioPE = 0;
+    string nombrediscor;
+    grafica += "graph [label = \"Reporte Tree " + name + "\"];\n";
+    grafica += "node[shape=plaintext]\n";
+    grafica += "rankdir=LR\n";
+    // lista de uniones
+    vector<string> uniones;
+    for (auto &&ino : lisinodes)
+    {
+        grafica += "Inodo" + to_string(inicioPE) + "[label=<\n";
+        grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+        //
+        grafica += "<tr><td>INODO " + to_string(inicioPE) + "</td></tr>\n";
+        grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
+        grafica += "<tr><td>uid</td><td>" + to_string(ino.i_uid) + "</td></tr>\n";
+        grafica += "<tr><td>gid</td><td>" + to_string(ino.i_gid) + "</td></tr>\n";
+        grafica += "<tr><td>size</td><td>" + to_string(ino.i_size) + "</td></tr>\n";
+        grafica += "<tr><td>type</td><td>" + to_string(ino.i_type) + "</td></tr>\n";
+        grafica += "<tr><td>block</td><td> ---- </td></tr>\n";
+        for (int i = 0; i < 15; i++)
+        {
+            if (ino.i_block[i] != -1)
+            {
+                grafica += "<tr><td>A" + to_string(i) + "</td><td PORT=\"f" + to_string(ino.i_block[i]) + "\">" + to_string(ino.i_block[i]) + "</td></tr>\n";
+                uniones.push_back("Inodo" + to_string(inicioPE) + ":f" + to_string(ino.i_block[i]) + " -> Block" + to_string(ino.i_block[i]) + "; \n");
+            }
+            else
+            {
+                grafica += "<tr><td>A" + to_string(i) + "</td><td>" + to_string(ino.i_block[i]) + "</td></tr>\n";
+            }
+        }
+        grafica += "\n</table>\n";
+        grafica += ">];\n";
+        inicioPE++;
+    }
+    // recorremos las particiones
+    int inicioPEE = 0;
+    for (auto &&ino : listblocks)
+    {
+        grafica += "Block" + to_string(inicioPEE) + "[label=<\n";
+        grafica += "<table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+        //
+        grafica += "<tr><td>Bloque" + to_string(inicioPEE) + "</td></tr>\n";
+        grafica += "<tr><td>Nombre</td><td>Valor</td></tr>\n";
+        for (int i = 0; i < 4; i++)
+        {
+            if (ino.b_content[i].b_inodo != -1)
+            {
+                string nombrecarpeta = ino.b_content[i].b_name;
+                grafica += "<tr><td>" + nombrecarpeta + "</td><td PORT=\"f" + to_string(ino.b_content[i].b_inodo) + "\">" + to_string(ino.b_content[i].b_inodo) + "</td></tr>\n";
+                uniones.push_back("Block" + to_string(inicioPEE) + ":f" + to_string(ino.b_content[i].b_inodo) + " -> Inodo" + to_string(ino.b_content[i].b_inodo) + "; \n");
+            }
+            else
+            {
+                string nombrecarpeta = ino.b_content[i].b_name;
+                grafica += "<tr><td>" + nombrecarpeta + "</td><td>" + to_string(ino.b_content[i].b_inodo) + "</td></tr>\n";
+            }
+        }
+        grafica += "\n</table>\n";
+        grafica += ">];\n";
+        inicioPEE++;
+    }
+    // ahora toca unir los punteros
+    for (auto &&uni : uniones)
+    {
+        grafica += uni;
+    }
+
+    return grafica;
+}
+
 void reportes(char *tokens)
 {
     string rutadestino = "";
@@ -582,6 +704,10 @@ void reportes(char *tokens)
     else if (strcasecmp(reptype.c_str(), "inode") == 0)
     {
         reptype = "Inode";
+    }
+    else if (strcasecmp(reptype.c_str(), "tree") == 0)
+    {
+        reptype = "Tree";
     }
     else
     {
@@ -687,6 +813,22 @@ void reportes(char *tokens)
             }
         }
         codegrafica += crearReporteInode(newmbr, rutadisco, rutadestino, namePartition);
+        //  escribir en el dot
+    }
+    else if (reptype == "Tree")
+    {
+        string namePartition = "";
+        for (auto &&disco : listaDisco)
+        {
+            for (auto &&parti : disco.listaparticiones)
+            {
+                if (parti.id == nombreid)
+                {
+                    namePartition = parti.nombre;
+                }
+            }
+        }
+        codegrafica += RepoTree(newmbr, rutadisco, rutadestino, namePartition);
         //  escribir en el dot
     }
     codegrafica += "}";
