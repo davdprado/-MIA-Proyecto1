@@ -26,6 +26,14 @@
 
 using namespace std;
 
+void Obtener_Fecha(char *fecha)
+{
+    time_t tiempo = time(0);
+    struct tm *tlocal = localtime(&tiempo);
+
+    strftime(fecha, 16, "%d/%m/%y %H:%M:%S", tlocal);
+}
+
 string obtenerRutaDiscos(string id)
 {
     for (auto &&disk : listaDisco)
@@ -426,4 +434,17 @@ void darformato(char *tokens)
     }
     makeExt3(rutadisco, id, namePartition, type);
     // aqui solo ira el cp del archivo binario
+
+    if (!israid)
+    {
+        string pathraid;
+        vector<string> auxraid = split(rutadisco, ".");
+        pathraid = auxraid[0] + "_raid.dsk";
+        string comandoraid = "cp -a \"" + rutadisco + "\" \"" + pathraid + "\"";
+        int status2 = system(comandoraid.c_str());
+        if (status2 == 0)
+            cout << "Raid Creado" << endl;
+        else
+            cout << "ocurrio un error" << endl;
+    }
 }

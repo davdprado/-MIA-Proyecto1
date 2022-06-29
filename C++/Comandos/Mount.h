@@ -45,6 +45,7 @@ void desmontar(char *tokens)
     string ident = "";
     vector<string> listadoides;
     bool existeid = false;
+    bool israid = false;
     vector<string> params = split(tokens, "$");
     // limpiando parametros
     // recorreremos los parametros

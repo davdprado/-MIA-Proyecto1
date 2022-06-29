@@ -65,16 +65,16 @@ fdisk @unit=>B $path=>"/tmp/archivos/fase 1/D3.dsk" $SiZe=>5242880 $nAMe=>PRI3
 /*Debería generar los ids: vda1, vdb1, vda2, vdb2*/
 /*vda para el d3.dsk y vdb para d1.dsk*/
 mouNt $nAMe=>PRI3 $path=>"/tmp/archivos/fase 1/D3.dsk"
-pause
+
 moUnt $PAth=>"/tmp/archivos/fase 1/D1.dsk" $nAMe=>PRI3
 mOunt $nAMe=>PRI2 $path=>"/tmp/archivos/fase 1/D3.dsk"
 mouNt $path=>"/tmp/archivos/fase 1/D1.dsk" $nAMe=>PRI2
-pause
+
 
 /*Validaciones al montar, no deberia cargarlos*/
 moUnt $nAMe=>PX $path=>"/tmp/archivos/fase 1/D3.dsk"
 moUNt $path=>"/tmp/archivos/fase 1/DX.dsk" $nAMe=>PRI3
-pause
+
 /*Listar las particiones montadas*/
 /*mouNt
 /*SAlida es la siguiente*/
@@ -122,9 +122,9 @@ mount
 /*id=>vdb1 $PAth=>"/tmp/archivos/fase 1/D1.dsk" $nAMe=>PRI3*/
 
 mkfs $ID=>vdb1 @type=>full
-pause
+
 rep $path=>"/tmp/archivos/fase 1/reportes/block_Disco1.jpg" $id=>vdb1 $nAMe=>block
-pause
+
 mkdir $id=>vdb1 $path=>"/home"
 /*deberia dar error
 mkdir $id=>vdb1 $path=>"/tmp"
@@ -142,9 +142,11 @@ mkdir $id=>vdb1 $path=>"/b6"
 mkdir $id=>vdb1 $path=>"/b7"
 mkfile $id=>vdb1 $path=>"/archivo.txt"
 rep $path=>"/tmp/archivos/fase 1/reportes/block2_Disco1.jpg" $id=>vdb1 $nAMe=>block
-pause
+
 rep $path=>"/tmp/archivos/fase 1/reportes/Inodos_Disco1.jpg" $id=>vdb1 $nAMe=>inode
-pause
+
 rep $path=>"/tmp/archivos/fase 1/reportes/sb_disk1.jpg" $id=>vdb1 $nAMe=>sb
 rep $path=>"/tmp/archivos/fase 1/reportes/tree_disk1.jpg" $id=>vdb1 $nAMe=>tree
+
+Syncronice $id=>vdb1 $path=>"../Datos.json"
 

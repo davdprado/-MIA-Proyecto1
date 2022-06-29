@@ -374,4 +374,17 @@ void mkdirr(char *tokens)
 
     crearCarpeta(deleteCaracter(rutadisco, '\"'), id, namePartition, p, deleteCaracter(path, '\"'));
     // aqui solo ira el cp del archivo binario
+
+    if (!israid)
+    {
+        string pathraid;
+        vector<string> auxraid = split(rutadisco, ".");
+        pathraid = auxraid[0] + "_raid.dsk";
+        string comandoraid = "cp -a \"" + rutadisco + "\" \"" + pathraid + "\"";
+        int status2 = system(comandoraid.c_str());
+        if (status2 == 0)
+            cout << "Raid Creado" << endl;
+        else
+            cout << "ocurrio un error" << endl;
+    }
 }
