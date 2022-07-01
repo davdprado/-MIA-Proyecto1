@@ -1,54 +1,70 @@
 [
 {
 "Nombre":"root",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[
 {
+"id":1,
 "Nombre":".",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":2,
 "Nombre":"..",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":3,
 "Nombre":"home",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":4,
 "Nombre":"tmp",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":5,
 "Nombre":"urs",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":6,
 "Nombre":"user",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":7,
 "Nombre":"mia",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":8,
 "Nombre":"fase1",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":9,
 "Nombre":"b1",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:48",
 "Contenido":[]},{
+"id":10,
 "Nombre":"b12",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]},{
+"id":11,
 "Nombre":"b3",
-"FechaC":"2022-06-29 16:55:01",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]},{
+"id":12,
 "Nombre":"b4",
-"FechaC":"2022-06-29 16:55:02",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]},{
+"id":13,
 "Nombre":"b5",
-"FechaC":"2022-06-29 16:55:02",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]},{
+"id":14,
 "Nombre":"b6",
-"FechaC":"2022-06-29 16:55:02",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]},{
+"id":15,
 "Nombre":"b7",
-"FechaC":"2022-06-29 16:55:02",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]},{
+"id":16,
 "Nombre":"archivo.txt",
-"FechaC":"2022-06-29 16:55:02",
+"FechaC":"2022-06-30 21:28:49",
 "Contenido":[]}]}]

@@ -100,19 +100,22 @@ void crearJSON(MBR mbrdisk, string rutadisco, string rutadestino, string name)
     string fecha(wide.begin(), wide.end());
     contenido += "\"FechaC\":\"" + fecha + "\",\n";
     contenido += "\"Contenido\":[\n";
+    int contador = 0;
     for (auto &&bloque : listblocks)
     {
         for (auto &&nombrei : bloque.b_content)
         {
             string nombrecarpeta = nombrei.b_name;
-            if ((nombrecarpeta != "." || nombrecarpeta != "..") && nombrei.b_inodo != -1)
+            if (((strcasecmp(nombrecarpeta.c_str(), ".") != 0) && (strcasecmp(nombrecarpeta.c_str(), "..") != 0)) || nombrei.b_inodo != -1)
             {
                 contenido += "{\n";
+                contenido += "\"id\":" + to_string(contador + 1) + ",\n";
                 contenido += "\"Nombre\":\"" + nombrecarpeta + "\",\n";
                 wstring wide2 = wtime(lisinodes[nombrei.b_inodo].i_atime);
                 string fecha2(wide2.begin(), wide2.end());
                 contenido += "\"FechaC\":\"" + fecha2 + "\",\n";
                 contenido += "\"Contenido\":[]},";
+                contador++;
             }
         }
     }
