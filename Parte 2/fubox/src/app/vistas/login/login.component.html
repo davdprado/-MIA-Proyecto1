@@ -19,9 +19,13 @@
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
+    <div>
+      <a class="btn btn-primary" role="button" routerLink="/registro">Registrate</a>
+    </div>
+
     <!-- Remind Passowrd -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+    <div class="alert alert-danger" *ngIf="errorStatus">
+      <p>{{errorMsj}}</p>
     </div>
 
   </div>

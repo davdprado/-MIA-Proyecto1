@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<h1 class="display-4">Usuarios Pendientes</h1>
+<br>
+<p>Usuarios nuevos pendientes de alta</p>
+
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Correo</th>
+        <th scope="col">status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <th scope="row">{{usuario.id}}</th>
+        <td>{{usuario.nombre}}</td>
+        <td>{{usuario.apellido}}</td>
+        <td>{{usuario.correo}}</td>
+        <td>{{usuario.status==0 ? 'pendiente':'activo'}}</td>
+        <td><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" (click)="aprobar(usuario.id)">Dar de alta</a></td>
+      </tr>
+    </tbody>
+  </table>
+  

@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
   })
 
   constructor(private api:ApiService, private router:Router) { }
+  errorStatus:boolean=false;
+  errorMsj:any ="";
 
   ngOnInit(): void {
   }
@@ -28,10 +30,18 @@ export class LoginComponent implements OnInit {
     this.api.loginByEmail(form).subscribe(data =>{
       let dataResponse:ResponseI=data;
       if (dataResponse.status!=-1) {
-        localStorage.setItem("token",dataResponse.usr);
-        if (dataResponse.rol=="Administrador") {
-          this.router.navigate(['dashboard']);
+        if (dataResponse.status == 1) {
+          localStorage.setItem('token',dataResponse.usr.correo);
+          if (dataResponse.rol=="Administrador") {
+            this.router.navigate(['dashboard']);
+          }
+        }else if (dataResponse.status == 0) {
+          this.errorStatus=true;
+          this.errorMsj = dataResponse.mensaje;
         }
+      }else{
+        this.errorStatus=true;
+        this.errorMsj = dataResponse.mensaje;
       }
     });
   }

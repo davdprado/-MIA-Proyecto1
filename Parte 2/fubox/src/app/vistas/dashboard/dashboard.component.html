@@ -1,1 +1,14 @@
-<p>dashboard works!</p>
+<app-navbar></app-navbar>
+<br>
+<br>
+<br>
+<h1 class="display-1">Administrador</h1>
+<p>Definir los due;os de los archivos</p>
+<h4>Ficheros Obtenidos</h4>
+
+<ul *ngFor="let fichero of ficheros">
+    <li>{{fichero.Nombre}}</li>
+    <ul *ngFor="let ficherop of fichero.Contenido">
+        <li ><button class="btn btn-link" (click)="editarAcces(ficherop.id)">{{ficherop.Nombre}}</button></li>
+    </ul>
+</ul>

@@ -1,0 +1,20 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a routerLink="/dashboard" class="navbar-brand">Home</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <a routerLink="/dashboard/pendientes" class="nav-item active nav-link">Usuarios Pendientes</a>
+                <a routerLink="/dashboard/reportados" class="nav-item active nav-link">Usuarios Reportados</a>
+                <a routerLink="/dashboard" class="nav item active nav-link">Permisos</a>
+            </ul>
+        </div>
+        <button class="btn btn-info" (click)="logOut()">Salir</button>
+</nav>
