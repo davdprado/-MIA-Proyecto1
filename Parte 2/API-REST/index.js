@@ -350,6 +350,18 @@ app.get("/getFiles/:id", function (req, res) {
   res.send(respuestaarr);
 });
 
+app.get("/getFileSe/:name", function (req, res) {
+  let dataDB = require("./DB.json");
+  let nombreF = req.params.name;
+  let respuestaarr = [];
+  dataDB.Carpeta[0].Contenido.forEach((file) => {
+    if (file.Nombre.includes(nombreF)) {
+      respuestaarr.push(file);
+    }
+  });
+  res.send(respuestaarr);
+});
+
 app.get("/alta/:idusr", function (req, res) {
   let dataDB = require("./DB.json");
   let idusuario = req.params.idusr;

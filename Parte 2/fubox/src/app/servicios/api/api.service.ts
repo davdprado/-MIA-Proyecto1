@@ -78,6 +78,11 @@ export class ApiService {
     let direccion = this.url+"getAllCarpet";
     return this.http.get<FicheroI[]>(direccion);
   }
+  
+  searchFile(name:string):Observable<FicheroI[]>{
+    let direccion = this.url+"getFileSe/"+name;
+    return this.http.get<FicheroI[]>(direccion);
+  }
 
   getReport():Observable<UsuarioI[]>{
     let direccion = this.url+"getReportados";

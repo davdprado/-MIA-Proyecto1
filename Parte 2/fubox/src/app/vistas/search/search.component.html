@@ -4,11 +4,26 @@
 <h4>Ficheros</h4>
 
 <nav class="navbar navbar-light bg-light">
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="nombre">
+      <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscar(nombre)">Search</button>
   </nav>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of ficheross">
+        <th scope="row">{{usuario.id}}</th>
+        <td>{{usuario.Nombre}}</td>
+        <td>{{usuario.FechaC}}</td>
+        </tr>
+    </tbody>
+  </table>
 
 <ul *ngFor="let fichero of ficheros">
     <li>{{fichero.Nombre}}</li>

@@ -11,7 +11,8 @@ import { FicheroI } from 'src/app/models/ficheros.interface';
 export class SearchComponent implements OnInit {
 
   ficheros : FicheroI[] | undefined;
-
+  ficheross : FicheroI[] | undefined;
+  nombre:string = '';
   constructor(private router:Router, private api:ApiService) { }
 
   ngOnInit(): void {
@@ -19,6 +20,12 @@ export class SearchComponent implements OnInit {
       this.ficheros = data;
       console.log(this.ficheros);
       
+    })
+  }
+
+  buscar(name:string){
+    this.api.searchFile(name).subscribe(data => {
+      this.ficheross = data
     })
   }
 
