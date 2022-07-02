@@ -4,3 +4,7 @@ export interface FicheroI{
     FechaC:string;
     Contenido:FicheroI[];
 };
+
+export interface CorreoI{
+    correo:string;
+};

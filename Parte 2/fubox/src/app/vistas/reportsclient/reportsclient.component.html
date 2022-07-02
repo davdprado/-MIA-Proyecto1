@@ -1,7 +1,7 @@
-<app-navbar></app-navbar>
-<h1 class="display-4">Usuarios Reportados</h1>
+<app-navclient></app-navclient>
+<h1 class="display-4">Reportar Usuarios</h1>
 <br>
-<p>Listado de usuarios Reportados</p>
+<p>que Usuario quiere reportar</p>
 
 <table class="table">
     <thead class="thead-dark">
@@ -19,9 +19,8 @@
         <td>{{usuario.nombre}}</td>
         <td>{{usuario.apellido}}</td>
         <td>{{usuario.correo}}</td>
-        <td>reportado</td>
-        <td><a class="btn btn-success btn-lg active" role="button" aria-pressed="true" (click)="habilitar(usuario.id)">Habilitar</a></td>
-        <td><a class="btn btn-danger btn-lg active" role="button" aria-pressed="true" (click)="deshabilitar(usuario.id)">Deshabilitar</a></td>
+        <td>{{usuario.status==0 ? 'pendiente':'activo'}}</td>
+        <td><a class="btn btn-danger btn-lg active" role="button" aria-pressed="true" (click)="reportar(usuario.id)">Reportar</a></td>
       </tr>
     </tbody>
   </table>

@@ -1,0 +1,22 @@
+<app-navclient></app-navclient>
+<h1>Mis Colaboracions</h1>
+<h4>Ficheros Donde yo soy Colaborador</h4>
+
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Propietario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let colaboracion of colaboraciones">
+        <th scope="row">{{colaboracion.id}}</th>
+        <td>{{colaboracion.nombre}}</td>
+        <td>{{colaboracion.propietario}}</td>
+        <td><a class="btn btn-danger" role="button" aria-pressed="true" (click)="noColab(colaboracion.id)">Dejar de Colaborar</a></td>
+      </tr>
+    </tbody>
+  </table>
+  

@@ -1,6 +1,7 @@
 {
-  "Nouser": 3,
-  "usrfile": 2,
+  "Nouser": 5,
+  "usrfile": 6,
+  "contColab": 1,
   "Usuario": [
     {
       "id": 1,
@@ -19,7 +20,7 @@
       "id": 2,
       "nombre": "David",
       "apellido": "Diaz",
-      "telefono": "47398284",
+      "telefono": "47398285",
       "username": "davdprado",
       "fecha_nacimiento": "04/06/99",
       "correo": "davdprado@gmail.com",
@@ -40,6 +41,19 @@
       "status": 1,
       "rol": "Cliente",
       "fecha_registro": "2022-07-01T18:43:27.632Z"
+    },
+    {
+      "id": 5,
+      "nombre": "Rolando",
+      "apellido": "Perez",
+      "telefono": "23624812",
+      "username": "RolaPerez",
+      "fecha_nacimiento": "18/06/1995",
+      "correo": "201807420daviddiaz@gmail.com",
+      "password": "OtraContrasena",
+      "status": 1,
+      "rol": "Cliente",
+      "fecha_registro": "2022-07-02T11:07:30.498Z"
     }
   ],
   "Carpeta": [
@@ -157,6 +171,21 @@
       "id": 2,
       "id_usuario": 3,
       "id_fichero": 16
+    },
+    {
+      "id": 4,
+      "id_usuario": 5,
+      "id_fichero": 6
+    },
+    {
+      "id": 5,
+      "id_usuario": 2,
+      "id_fichero": 3
+    },
+    {
+      "id": 6,
+      "id_usuario": 3,
+      "id_fichero": 13
     }
   ],
   "fichero_colab": [],

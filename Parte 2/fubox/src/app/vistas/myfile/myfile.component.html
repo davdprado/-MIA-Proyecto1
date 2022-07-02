@@ -1,0 +1,11 @@
+<app-navclient></app-navclient>
+<h1>Mis Ficheros</h1>
+<h4>Ficheros Donde yo soy el Propietario</h4>
+
+<ul *ngFor="let fichero of ficheros">
+    <li >
+        <button class="btn btn-link">{{fichero.Nombre}}</button>
+            <input type="text" placeholder="Correo Colab" name="correo" [(ngModel)]="correo"><button class="btn btn-primary" (click)="onColab(fichero.id,correo)">Colaborar</button> 
+        <button class="btn btn-danger">Eliminar</button>
+    </li>
+</ul>

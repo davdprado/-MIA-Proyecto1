@@ -31,9 +31,11 @@ export class LoginComponent implements OnInit {
       let dataResponse:ResponseI=data;
       if (dataResponse.status!=-1) {
         if (dataResponse.status == 1) {
-          localStorage.setItem('token',dataResponse.usr.correo);
+          localStorage.setItem('token',String(dataResponse.id));
           if (dataResponse.rol=="Administrador") {
             this.router.navigate(['dashboard']);
+          }else if (dataResponse.rol=="Cliente") {
+            this.router.navigate(['clientview']);
           }
         }else if (dataResponse.status == 0) {
           this.errorStatus=true;
